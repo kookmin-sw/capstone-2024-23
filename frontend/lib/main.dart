@@ -9,6 +9,7 @@ import 'dart:convert'; //json 변환 패키지
 import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
+import 'TextToSpeech.dart';
 
 void main() {
   runApp(
@@ -38,12 +39,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //sever.dart 에서의 Sever 클래스 상속
   Sever sever = Sever();
-
+  TTS tts = TTS(message: '기본');
   //앱 실행시 백그라운드 실행
   @override
   void initState() {
     super.initState();
     sever.getData();
+    tts.setMessage('화면을 탭하세요');
+    tts.speak();
   }
 
   @override
@@ -55,13 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SttTab()),
-        );
-      },
-      onDoubleTap: () {
-        // 더블 탭 이벤트 처리 시 ObjectRecognitionMode() 호출
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
         );
       },
   child: Scaffold(
@@ -189,3 +185,4 @@ class _SttTabState extends State<SttTab> {
     );
   }
 }
+
