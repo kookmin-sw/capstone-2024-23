@@ -6,10 +6,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CoordInfo {
-
-    private String totalCount;
-
-    @JsonProperty("coordinate")
-    private List<Coordinate> coordinate;
+public class SearchPoiInfo {
+    private int totalCount;
+    @JsonProperty("pois")
+    private Pois pois;
 }

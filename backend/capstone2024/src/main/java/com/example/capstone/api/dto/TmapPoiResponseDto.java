@@ -7,9 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @ToString
-public class TmapGeoCodingResponseDto {
-
-    private CoordinateInfo coordinateInfo;
-
-
+public class TmapPoiResponseDto {
+    private SearchPoiInfo searchPoiInfo;
 }

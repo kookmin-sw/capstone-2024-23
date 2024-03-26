@@ -12,6 +12,8 @@ public class UriBuilderService {
     private static final String TMAP_GEO_CODING_URL = "https://apis.openapi.sk.com/tmap/geo/fullAddrGeo";
     //보행자 경로 검색
     private static final String TMAP_PEDESTRAIN_URL = "https://apis.openapi.sk.com/tmap/routes/pedestrian";
+    //POI 검색
+    private static final String TMAP_POI_URL = "https://apis.openapi.sk.com/tmap/pois";
 
     public URI buildUriGeoCodingByAddress(String address){
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TMAP_GEO_CODING_URL);
@@ -28,7 +30,17 @@ public class UriBuilderService {
     public URI buildUriPedestrianByCoord(){
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TMAP_PEDESTRAIN_URL);
         uriBuilder.queryParam("version","1");
-        uriBuilder.queryParam("format","json");
+        URI uri = uriBuilder.build().encode().toUri();
+        System.out.println("pede uri = " + uri);
+        return uri;
+    }
+
+    public URI buildUriPoiByCoord(String address){
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TMAP_POI_URL);
+        uriBuilder.queryParam("version","1");
+        uriBuilder.queryParam("searchKeyword",address);
+        uriBuilder.queryParam("resCoordType", "WGS84GEO");
+        uriBuilder.queryParam("reqCoordType", "WGS84GEO");
         URI uri = uriBuilder.build().encode().toUri();
         System.out.println("uri = " + uri);
         return uri;
