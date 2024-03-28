@@ -1,7 +1,9 @@
 package com.example.capstone.api.service;
 
+import com.example.capstone.api.dto.Feature;
 import com.example.capstone.api.dto.TmapGeoCodingResponseDto;
 import com.example.capstone.api.dto.TmapPedestrianResponseDto;
+import com.example.capstone.api.dto.TmapPoiResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -14,55 +16,57 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class PedestrianService {
     private final RestTemplate restTemplate;
     private final UriBuilderService uriBuilderService;
-    private final GeoCodingService geoCodingService;
+    private final PoiService poiService;
     private final ObjectMapper objectMapper;
     private static final String APPKEY = "qnMdq4E5hK6Jiying7vO84rBBYBMqE0L8JibODZN";
 
-    public TmapPedestrianResponseDto requestPedestrian(String startAddress, String endAddress) throws Exception{
-        if (ObjectUtils.isEmpty(startAddress) || ObjectUtils.isEmpty(endAddress)) return null;
+    public TmapPedestrianResponseDto requestPedestrian(String startLat, String startLon, String endAddress) throws Exception {
+
+        if (ObjectUtils.isEmpty(startLat) || ObjectUtils.isEmpty(startLon) || ObjectUtils.isEmpty(endAddress))
+            return null;
         //lon 경도 X
         //lat 위도 Y
+        TmapPoiResponseDto tmapPoiResponseDto = poiService.requestPoi(endAddress);
 
-        TmapGeoCodingResponseDto tmapGeoCodingResponseDto = geoCodingService.requestGeoCoding(startAddress);
-        String startNewLat = tmapGeoCodingResponseDto.getCoordinateInfo().getCoordinate().getFirst().getNewLat();
-        String startNewLon = tmapGeoCodingResponseDto.getCoordinateInfo().getCoordinate().getFirst().getNewLon();
+        String endLat = tmapPoiResponseDto.getSearchPoiInfo().getPois().getPoi().getFirst().getFrontLat();
+        String endLon = tmapPoiResponseDto.getSearchPoiInfo().getPois().getPoi().getFirst().getFrontLon();
 
-        TmapGeoCodingResponseDto tmapGeoCodingResponseDto2 = geoCodingService.requestGeoCoding(endAddress);
-        String endNewLat = tmapGeoCodingResponseDto2.getCoordinateInfo().getCoordinate().getFirst().getNewLat();
-        String endNewLon = tmapGeoCodingResponseDto2.getCoordinateInfo().getCoordinate().getFirst().getNewLon();
 
-        System.out.println("startNewLat = " + startNewLat);
-        System.out.println("startNewLon = " + startNewLon);
-        System.out.println("endNewLat = " + endNewLat);
-        System.out.println("endNewLon = " + endNewLon);
+        System.out.println("변환 완료");
+        System.out.println("startLat = " + startLat);
+        System.out.println("startLon = " + startLon);
+        System.out.println("endLat = " + endLat);
+        System.out.println("endLon = " + endLon);
         URI uri = uriBuilderService.buildUriPedestrianByCoord();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("appKey",APPKEY);
+        headers.add("appKey", APPKEY);
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("startX",startNewLon);
-        params.add("startY",startNewLat);
-        params.add("endX",endNewLon);
-        params.add("endY",endNewLat);
-        params.add("reqCoordType","WGS84GEO");
-        params.add("resCoordType","WGS84GEO");
-        params.add("startName",startAddress);
-        params.add("endName",endAddress);
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("startX", startLon);
+        requestBody.put("startY", startLat);
+        requestBody.put("endX", endLon);
+        requestBody.put("endY", endLat);
+        requestBody.put("reqCoordType", "WGS84GEO");
+        requestBody.put("startName", "출발지");
+        requestBody.put("endName", endAddress);
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
+//
+        String jsonBody = objectMapper.writeValueAsString(requestBody);
+        // 콘솔에 출력
+        System.out.println("Request JSON Body: " + jsonBody);
 
-
-
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
         //api 호출
-        //추후에 바디 변경 필요
-//        TmapPedestrianResponseDto body = restTemplate.exchange(uri, HttpMethod.POST, entity, TmapPedestrianResponseDto.class).getBody();
-//        return body;
+
         // API 호출 및 응답 받기 (String 형태로)
         String rawResponse = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class).getBody();
 
@@ -71,7 +75,9 @@ public class PedestrianService {
 
         // 전처리된 응답을 DTO로 변환
         TmapPedestrianResponseDto responseDto = objectMapper.readValue(cleanedResponse, TmapPedestrianResponseDto.class);
+
         return responseDto;
     }
+
 
 }
