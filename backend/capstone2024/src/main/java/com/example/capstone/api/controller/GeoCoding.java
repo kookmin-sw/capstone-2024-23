@@ -51,4 +51,20 @@ public class GeoCoding {
         return testBody;
     }
 
+    @GetMapping("/current-location")
+    public Poi currentLocation(@RequestParam("curLat") String curLat,
+                       @RequestParam("curLon") String curLon,
+                       @RequestParam("uuid") String uuid,
+                       @RequestParam("nodeIndex") int nodeIndex){
+
+        return null;
+    }
+
+    @GetMapping("/cancel")
+    public void cancelNavi(){
+
+
+    }
+
+
 }
