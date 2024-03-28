@@ -17,9 +17,9 @@ public class GeoCoding {
     private final PedestrianService pedestrianService;
     private final PoiService poiService;
     @GetMapping("/address-to-coord")
-    public Coordinate testGPS(@RequestParam(value = "address") String address){
+    public Coordinate testGPS(@RequestParam("address") String address){
         Coordinate coordinate;
-        coordinate = geoCodingService.requestGeoCoding(address).getCoordinateInfo().getCoordinate().getFirst();
+        coordinate = geoCodingService.requestGeoCoding(address).getCoordinateInfo().getCoordinate().get(0);
         return coordinate;
     }
 
@@ -33,10 +33,10 @@ public class GeoCoding {
         return pedestrianService.requestPedestrian(startLat,startLon,endAddress);
     }
 
-    @GetMapping("/test-poi")
-    public Poi poiTest(@RequestParam(value = "address") String address){
+    @GetMapping("/poi")
+    public Poi poiTest(@RequestParam("address") String address){
         Poi testBody;
-        testBody = poiService.requestPoi(address).getSearchPoiInfo().getPois().getPoi().getFirst();
+        testBody = poiService.requestPoi(address).getSearchPoiInfo().getPois().getPoi().get(0);
         return testBody;
     }
 

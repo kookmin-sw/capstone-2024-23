@@ -1,5 +1,6 @@
 package com.example.capstone.api.service;
 
+import com.example.capstone.api.dto.Feature;
 import com.example.capstone.api.dto.TmapGeoCodingResponseDto;
 import com.example.capstone.api.dto.TmapPedestrianResponseDto;
 import com.example.capstone.api.dto.TmapPoiResponseDto;
@@ -15,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +29,10 @@ public class PedestrianService {
     private final ObjectMapper objectMapper;
     private static final String APPKEY = "qnMdq4E5hK6Jiying7vO84rBBYBMqE0L8JibODZN";
 
-    public TmapPedestrianResponseDto requestPedestrian(String startLat, String startLon, String endAddress) throws Exception{
+    public TmapPedestrianResponseDto requestPedestrian(String startLat, String startLon, String endAddress) throws Exception {
 
-        if (ObjectUtils.isEmpty(startLat)||ObjectUtils.isEmpty(startLon) || ObjectUtils.isEmpty(endAddress)) return null;
+        if (ObjectUtils.isEmpty(startLat) || ObjectUtils.isEmpty(startLon) || ObjectUtils.isEmpty(endAddress))
+            return null;
         //lon 경도 X
         //lat 위도 Y
         TmapPoiResponseDto tmapPoiResponseDto = poiService.requestPoi(endAddress);
@@ -46,7 +49,7 @@ public class PedestrianService {
         URI uri = uriBuilderService.buildUriPedestrianByCoord();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("appKey",APPKEY);
+        headers.add("appKey", APPKEY);
 
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("startX", startLon);
@@ -72,6 +75,7 @@ public class PedestrianService {
 
         // 전처리된 응답을 DTO로 변환
         TmapPedestrianResponseDto responseDto = objectMapper.readValue(cleanedResponse, TmapPedestrianResponseDto.class);
+
         return responseDto;
     }
 
