@@ -60,7 +60,7 @@ public class GeoCoding {
         return null;
     }
 
-    @GetMapping("/cancel")
+    @GetMapping("/cancel-navi")
     public void cancelNavi(){
 
 
