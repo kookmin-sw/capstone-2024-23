@@ -24,9 +24,20 @@ public class GeoCoding {
     }
 
     @GetMapping("/find-way")
-    public TmapPedestrianResponseDto testPede(@RequestParam("startLat") String startLat
+    public TmapPedestrianResponseDto checkPede(@RequestParam("startLat") String startLat
                            , @RequestParam("startLon") String startLon
             , @RequestParam(value = "endAddress") String endAddress) throws Exception {
+        System.out.println("startLat = " + startLat);
+        System.out.println("startLon = " + startLon);
+        System.out.println("endAddress = " + endAddress);
+        return pedestrianService.requestPedestrian(startLat,startLon,endAddress);
+    }
+
+    @GetMapping("/start-navi")
+    public TmapPedestrianResponseDto confirmPede(@RequestParam("startLat") String startLat
+            , @RequestParam("startLon") String startLon
+            , @RequestParam("endAddress") String endAddress
+            ,@RequestParam("uuid") String uuid) throws Exception {
         System.out.println("startLat = " + startLat);
         System.out.println("startLon = " + startLon);
         System.out.println("endAddress = " + endAddress);
