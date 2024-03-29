@@ -3,6 +3,7 @@ package com.example.capstone.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,5 +17,17 @@ public class TmapPedestrianResponseDto {
     @JsonProperty("features")
     private List<Feature> features;
 
-
+    public TmapPedestrianResponseDto filteredPoint() {
+        final List<Feature> features = new ArrayList<>();
+        for (Feature feature : this.features) {
+            if (feature.getGeometry().getType().equalsIgnoreCase("point")) {
+                features.add(feature);
+            }
+        }
+        return new TmapPedestrianResponseDto(
+                this.type,
+                features
+        );
+    }
 }
+

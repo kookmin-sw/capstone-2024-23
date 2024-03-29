@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class TmapGeoCodingResponseDto {
 
-    private CoordInfo coordinateInfo;
+    private CoordinateInfo coordinateInfo;
 
 
 }
