@@ -10,6 +10,8 @@ import 'dart:convert'; //json 변환 패키지
 import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
+
+import 'GoogleMap.dart';
 import 'TextToSpeech.dart';
 import 'GetAndroidID.dart';
 
@@ -42,6 +44,9 @@ class _MyHomePageState extends State<MyHomePage> {
   //sever.dart 에서의 Sever 클래스 상속
   Sever sever = Sever();
   TTS tts = TTS(message: '기본');
+
+  // GoogleMap.dart 에서의 GoogleMap 클래스 상속
+  MyGoogleMap mygoogleMap = MyGoogleMap();
 
   //앱 실행시 백그라운드 실행
 
@@ -169,18 +174,32 @@ class _SttTabState extends State<SttTab> {
               ),
             ),
             TextButton(onPressed: (){
-              if(_lastWords=='내비게이션 모드'){
+              if(_lastWords=='보행 모드'){
                 Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
                 );
-              } else if(_lastWords == '편의 기능 모드'){
+              }
+              else if (_lastWords == '경로 탐색 모드') {
+              Navigator.pop(context);
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyGoogleMap())
+              );
+              } else if(_lastWords == '즐겨찾기 모드') {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ConvenienceMode()),
                 );
+              }
+              else if (_lastWords == '편의 모드') {
+              Navigator.pop(context);
+              Navigator.push(
+              context,
+                MaterialPageRoute(builder: (context) => ConvenienceMode()),
+              );
               } else{
                 Navigator.pop(context);
               }
