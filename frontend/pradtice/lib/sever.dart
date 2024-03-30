@@ -18,7 +18,27 @@ class Sever {
   }
 
 
-  postData() {
 
-  }
+// 서버 http post 함수
+// postData() async {
+//   String address = Uri.encodeComponent("서울시 강남구 역삼동");
+//   var url = Uri.parse('http://15.164.219.111:8080/test');
+//   var response = await http.post(
+//     url,
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: jsonEncode(<String, String>{
+//       'address': address,
+//     }),
+//   );
+//
+//   if (response.statusCode == 200) {
+//     print(jsonDecode(response.body));
+//   } else {
+//     throw Exception('데이터 전송 실패');
+//   }
+// }
 }
+
+
