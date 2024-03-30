@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart'; //권한 설정
 import 'package:geolocator/geolocator.dart'; // 위치 패키지
 import 'ObjectRecognitionMode.dart'; // 새로 만든 파일 import
@@ -9,6 +10,8 @@ import 'dart:convert'; //json 변환 패키지
 import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
+import 'TextToSpeech.dart';
+import 'GetAndroidID.dart';
 
 void main() {
   runApp(
@@ -38,14 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //sever.dart 에서의 Sever 클래스 상속
   Sever sever = Sever();
+  TTS tts = TTS(message: '기본');
 
   //앱 실행시 백그라운드 실행
+
   @override
   void initState() {
     super.initState();
     sever.getData();
+    tts.setMessage('화면을 탭하세요');
+    tts.speak();
+    GetID();
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,20 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
           MaterialPageRoute(builder: (context) => SttTab()),
         );
       },
-      onDoubleTap: () {
-        // 더블 탭 이벤트 처리 시 ObjectRecognitionMode() 호출
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
-        );
-      },
   child: Scaffold(
         appBar: AppBar(
-          title: Text('메인 화면'),
+          title: Text("메인화면"),
         ),
         body: Center(
           child: Text('화면을 탭하세요', style: TextStyle(fontSize: 30)), // 텍스트 사이즈 조정
         ),
+
       ),
     );
   }
@@ -124,11 +125,14 @@ class _SttTabState extends State<SttTab> {
     setState(() {});
   }
 
+
+
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
