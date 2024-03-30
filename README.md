@@ -86,30 +86,39 @@ $ mysql -u yoon -p   # 특정 계정으로 접근시 ex) yoon 계정 사용
 # mysql root 비밀번호 설정 (설치 후 반드시 설정)
 # 1. mysql 설정 들어가기
 mysql> use mysql
+
 # 2. root 비밀번호 설정
 mysql> alter user "root"@"localhost" identified with mysql_native_password by "암호";
+
 # 3. 저장하기
 mysql> FLUSH PRIVILEGES;
 
 # 사용자 계정 생성하기
 # 1. mysql 설정 들어가기
 mysql> use mysql
+
 # 2. 외부 접근을 허용하는 사용자 추가하기(원격으로 mysql접근가능)
 create user '계정명'@'%' identified by '0000';
+
 # 3. 권한 부여해주기
 grant all privileges on *.* to '계정명'@'%';
+
 # 4. 저장하기
 mysql> FLUSH PRIVILEGES;
 
 # 외부 접속 허용하기
 # 1. 최고 권한 부여
-$ sudo su 
+$ sudo su
+
 # 2. 경로 이동하기
 $ cd/etc/mysql/mysql.conf.d
+
 # 3. 편집기 실행
 $ vi mysqld.cnf
+
 # 4. bind-address 수정하기 (i 눌러 수정모드 진입, 수정 후 ESC 누르고 :wq 를 통해 저장 후 종료)
 bind-address = 0.0.0.0
+
 # 5. 서버 재시작
 service mysql restart
 ```
@@ -128,7 +137,7 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
 
 6. 서버 실행
 ```
-ssh -i ~/Downloads/capstone2024Key.pem ubuntu@EC2 IP 주소
+ssh -i ~/capstone2024Key.pem ubuntu@EC2 IP 주소
 
 nohup java -jar 자바파일이름.jar &
 
