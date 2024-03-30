@@ -1,8 +1,6 @@
 ## [EYE-U](https://kookmin-sw.github.io/capstone-2024-02) 시각장애인을 위한 보행 네비게이션 <br>
-**팀페이지 주소** -> [https://kookmin-sw.github.io/](https://kookmin-sw.github.io/capstone-2024-23/)
+**팀페이지 주소** -> [https://kookmin-sw.github.io/](https://kookmin-sw.github.io/capstone-2024-23/) <br>
 **발표 동영상** -> 
-
-
 
 ## 프로젝트 소개
 EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
