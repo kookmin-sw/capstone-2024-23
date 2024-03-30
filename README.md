@@ -116,10 +116,9 @@ service mysql restart
 
 4. git clone
 ```
-# 1.apt update
-$ sudo apt-get update
-
+$ git clone https://github.com/kookmin-sw/capstone-2024-23.git
 ```
+
 5. Build & Upload
 ```
 1. Intellij bootJar 이용하여 빌드
@@ -141,11 +140,9 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 ```
 
 ### 클라이언트 실행 환경설정
-```
 1. 안드로이드스튜디오 Download (sdk 29 이상)
 2. 플러터 3.19 버전 Download 
 3. pubspec.yaml 파일 -> seppech_to_text : Pub.get Download
-```
 
 ### 안드로이드 실행 환경설정
 
