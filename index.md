@@ -1,23 +1,12 @@
 ## [EYE-U](https://kookmin-sw.github.io/capstone-2024-02) 시각장애인을 위한 보행 네비게이션 <br>
 **팀페이지 주소** -> [https://kookmin-sw.github.io/](https://kookmin-sw.github.io/capstone-2024-23/) <br>
-**발표 동영상** -> 
+**발표 동영상** -> https://www.youtube.com/watch?v=sgO9tWCrPbo&feature=youtu.be <br>
 
 ## 프로젝트 소개
 EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
 기존의 시각 장애인을 위한 길 안내 방법은 주로 점자판이나 안내견과 같은 수단을 사용해왔지만, 이러한 방법들은 제약이 많고 불편한 점들이 있습니다.
 이러한 문제를 극복하기 위해 시각 장애를 가진 분들을 위한 네비게이션 앱을 개발하였습니다.
-
-### EYE-U POINT 
-1. AI 기술을 활용한 주변 환경 탐지
-   - 주변 환경을 안전하게 인지할 수 있도록 지원
-2. 사용자 친화적 인터페이스
-   - 직관적인 기능을 통한 편안한 서비스 제공
-3. 신속하고 정확한 경로 제공
-   - 시각 장애인 이동 보조 
 <br>
-
-## 구성도
-
 
 
 ## Abstract
@@ -25,6 +14,10 @@ EYE-U aims to enhance the mobility of visually impaired individuals by providing
 Traditional methods of guiding visually impaired individuals, such as braille maps or guide dogs, often come with limitations and inconveniences.<br>
 To overcome these challenges, we have developed a navigation app specifically designed for individuals with visual impairments.<br>
 <br>
+
+## 서비스 구조
+<img width="850" alt="image" src="https://github.com/yoon-mina/capstone-2024-23/assets/143046108/09e43878-52ed-4f80-a377-556689f73191">
+
 
 ### 팀 소개
 |                                                              **김호준**                                                              |                                                          **박성원**                                                          |                                                           **윤미나**                                                           |                                                                **이태영**                                                                |                                                                **정회창**                                                                |
@@ -154,6 +147,7 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 1. 안드로이드스튜디오 Download (sdk 29 이상)
 2. 플러터 3.19 버전 Download 
 3. pubspec.yaml 파일 -> seppech_to_text : Pub.get Download
+<br>
 
 ### 안드로이드 실행 환경설정
 
@@ -161,5 +155,3 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 2. 설정 -> 화면 7번 터치 -> 개발자모드 실행
 3. 앱 실행 
 
-## 기타
-추가로 전하고 싶은 내용이 있다면 여기에 작성해주세요.
