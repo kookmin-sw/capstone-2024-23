@@ -144,8 +144,10 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 
 ### 클라이언트 실행 환경설정
 1. 안드로이드스튜디오 Download (sdk 29 이상)
-2. 플러터 3.19 버전 Download 
-3. pubspec.yaml 파일 -> seppech_to_text : Pub.get Download
+2. 플러터 3.19 이상 버전 Download 
+3. frontend/android/gradle/gradle-wrapper.prop에서 "distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.3-all.zip"
+줄에서에서 open for Editing in Android Studio (안될시에 https://gradle.org/releases/ 에서 수동 다운로드)
+4. pubspec.yaml 파일 Pub.get 
 
 ### 안드로이드 실행 환경설정
 
