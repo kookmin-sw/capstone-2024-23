@@ -1,5 +1,5 @@
 ## [EYE-U](https://kookmin-sw.github.io/capstone-2024-02) 객체탐지를 활용한 시각장애인용 보행 보조 앱 <br>
-**팀페이지 주소** -> [https://kookmin-sw.github.io/](https://kookmin-sw.github.io/capstone-2024-23/) <br>
+**팀페이지 주소** -> [https://kookmin-sw.github.io/capstone-2024-23/<br>](https://github.com/kookmin-sw/capstone-2024-23)
 **발표 동영상** -> https://www.youtube.com/watch?v=sgO9tWCrPbo&feature=youtu.be <br>
 
 ## 프로젝트 소개
@@ -20,12 +20,50 @@ To overcome these challenges, we have developed a navigation app specifically de
 
 
 ### 팀 소개
-|                                                              **김호준**                                                              |                                                          **박성원**                                                          |                                                           **윤미나**                                                           |                                                                **이태영**                                                                |                                                                **정회창**                                                                |
-|:--------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|
-| [<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/b438c3e6-63fd-4747-8596-9815e2b20f45" alt="김호준" width="100" height="100"><br/> @hojuni9999](https://github.com/hojuni9999) | [<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/569ef827-663a-4036-922e-e65e59f01667" alt="박성원" width="100" height="100"><br/> @XungHi](https://github.com/XungHi) | [<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5d90865f-5466-4d99-a2bc-ac5b68bcaf39" alt="윤미나" width="100" height="100"><br/> @yoon-mina](https://github.com/yoon-mina) | [<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/66311ab9-fe6e-4fae-a600-a8dc8c440a89" alt="이태영" width="100" height="100"><br/> @LeeTaeYeong00](https://github.com/LeeTaeYeong00) | [<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/237d6ac3-0deb-4445-a138-898564eecbf9" alt="정회창" width="100" height="100"><br/> @picetea44](https://github.com/picetea44) |
-|****5206|****5207|****5209|****5211|****5212|
-|AI  |Front-end|Back-end|Front-end|Back-end|
+#### 김호준
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/b438c3e6-63fd-4747-8596-9815e2b20f45" alt="김호준" width="150" height="150"><br>
 
+~~~
+Student ID : ****5206
+role : AI 
+E-mail: hojuni9999@kookmin.ac.kr
+~~~
+
+#### 박성원
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/569ef827-663a-4036-922e-e65e59f01667" alt="박성원" width="150" height="150"><br/> 
+
+~~~
+Student ID : ****5207
+role : Front-end 
+E-mail: tjddnjs612@kookmin.ac.kr
+~~~
+
+#### 윤미나
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5d90865f-5466-4d99-a2bc-ac5b68bcaf39" alt="윤미나" width="150" height="150"><br/>
+
+~~~
+Student ID : ****5209
+role : Back-end 
+E-mail: skwhjj@kookmin.ac.kr
+~~~
+
+#### 이태영
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/66311ab9-fe6e-4fae-a600-a8dc8c440a89" alt="이태영" width="150" height="150"><br/> 
+
+~~~
+Student ID : ****5211
+role : Front-end 
+E-mail: sam4886@kookmin.ac.kr
+~~~
+
+#### 정회창
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/237d6ac3-0deb-4445-a138-898564eecbf9" alt="정회창" width="150" height="150"><br/> 
+
+~~~
+Student ID : ****5212
+role : Back-end
+E-mail: picetea44@kookmin.ac.kr
+~~~
 
 
 ## 사용법
@@ -33,7 +71,8 @@ To overcome these challenges, we have developed a navigation app specifically de
 
 리눅스(우분투) 기준
 1. JAVA 설치
-```
+   
+~~~
 # 1.apt update
 $ sudo apt-get update
 
@@ -42,10 +81,11 @@ $ sudo apt-get install openjdk-21-jdk
 
 # 3. 설치 후 버젼 확인
 $ java -version 
-```
+~~~
 
 2. 환경변수 설정
-```
+   
+~~~
 # 환경변수 확인 (아무것도 안떠야 정상)
 $ echo $JAVA_HOME
 
@@ -65,10 +105,11 @@ export CLASSPATH=$JAVA_HOME/jre/lib
 
 # 환경변수 재확인 (경로가 떠야 정상)
 $ echo $JAVA_HOME
-```
+~~~
 
 3. MySQL 설치 (원격 접속 설정 포함)
-```
+   
+~~~
 # mysql 설치
 $ apt-get install mysql-server
 
@@ -117,22 +158,25 @@ bind-address = 0.0.0.0
 
 # 5. 서버 재시작
 service mysql restart
-```
+~~~
 
 4. git clone
-```
+   
+~~~
 $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
-```
+~~~
 
 5. Build & Upload
-```
+   
+~~~
 1. Intellij bootJar 이용하여 빌드
 2. FileZilla 업로드
 호스트에 자신이 만든 EC2 IP 주소 입력하고, 키 파일에 EC2 생성시 받은 PEM 키 넣어주기
-```
+~~~
 
 6. 서버 실행
-```
+   
+~~~
 ssh -i ~/capstone2024Key.pem ubuntu@EC2 IP 주소
 
 nohup java -jar 자바파일이름.jar &
@@ -142,7 +186,7 @@ nohup java -jar -Dspring.profiles.active=prod 자바파일이름.jar &
 
 #config 별도 폴더 말고 외부의 application.properties 사용하기
 java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
-```
+~~~
 
 ### 클라이언트 실행 환경설정
 1. 안드로이드스튜디오 Download (sdk 29 이상)
@@ -151,7 +195,6 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 <br>
 
 ### 안드로이드 실행 환경설정
-
 1. usb 휴대폰 연결 
 2. 설정 -> 화면 7번 터치 -> 개발자모드 실행
 3. 앱 실행 
