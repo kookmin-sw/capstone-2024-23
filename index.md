@@ -5,7 +5,7 @@
 ## 프로젝트 소개
 EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
 기존의 시각 장애인을 위한 길 안내 방법은 주로 점자판이나 안내견과 같은 수단을 사용해왔지만, 이러한 방법들은 제약이 많고 불편한 점들이 있습니다.
-이러한 문제를 극복하기 위해 시각 장애를 가진 분들을 위한 네비게이션 앱을 개발하였습니다.
+이러한 문제를 극복하기 위해 시각 장애를 가진 분들을 위한 네비게이션 앱을 개발하게 되었습니다.
 <br>
 
 
@@ -15,8 +15,15 @@ Traditional methods of guiding visually impaired individuals, such as braille ma
 To overcome these challenges, we have developed a navigation app specifically designed for individuals with visual impairments.<br>
 <br>
 
+### EYE-U POINT
+1. 접근성 및 편의성
+   - 직관적인 기능을 통한 편안한 서비스 제공
+2. 위험 물체 탐지
+   - 주변 환경을 안전하게 인지할 수 있도록 지원
+<br/>
+
 ## 서비스 구조
-<img width="850" alt="image" src="https://github.com/yoon-mina/capstone-2024-23/assets/143046108/09e43878-52ed-4f80-a377-556689f73191">
+<img width="807" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/d903715b-b1cf-4354-9ff2-f6341856339c">
 
 
 ### 팀 소개
