@@ -18,7 +18,7 @@ EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여
 <img width="807" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/d903715b-b1cf-4354-9ff2-f6341856339c">
 
 ### 3. 소개 영상
-**발표 동영상** -> https://www.youtube.com/watch?v=sgO9tWCrPbo&feature=youtu.be <br>
+**[발표 동영상](https://www.youtube.com/watch?v=sgO9tWCrPbo&feature=youtu.be)**  <br>
 
 <br>
 
