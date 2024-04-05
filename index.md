@@ -1,22 +1,24 @@
 ## [EYE-U](https://kookmin-sw.github.io/capstone-2024-23) 객체탐지를 활용한 시각장애인용 보행 보조 앱 <br>
+**[중간 보고서](https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link)** <br>
+**[중간발표 PPT](https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true)**<br/>
 **[팀페이지 주소](https://github.com/kookmin-sw/capstone-2024-23)** <br>
-**[중간보고서](https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link)** <br>
-**[중간발표](https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true)**
+<br/>
 
 ## 프로젝트 소개
 EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
 기존의 시각 장애인을 위한 길 안내 방법은 주로 점자판이나 안내견과 같은 수단을 사용해왔지만, 이러한 방법들은 제약이 많고 불편한 점들이 있습니다.
 이러한 문제를 극복하기 위해 시각 장애를 가진 분들을 위한 네비게이션 앱을 개발하게 되었습니다.
-<br>
-
+<br/>
 
 ## Abstract
 EYE-U aims to enhance the mobility of visually impaired individuals by providing a safer and more convenient navigation solution. <br>
 Traditional methods of guiding visually impaired individuals, such as braille maps or guide dogs, often come with limitations and inconveniences.<br>
 To overcome these challenges, we have developed a navigation app specifically designed for individuals with visual impairments.<br>
-<br>
- 
-[![발표동영상](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/fbbb76cf-4f32-4450-8ba2-bba2e690552a)](https://www.youtube.com/watch?v=sgO9tWCrPbo)
+<br/>
+
+## 소개 영상
+[![소개영상](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/fbbb76cf-4f32-4450-8ba2-bba2e690552a)](https://www.youtube.com/watch?v=sgO9tWCrPbo)
+<br/>
 
 
 ### EYE-U POINT
@@ -84,7 +86,7 @@ E-mail: picetea44@kookmin.ac.kr
 ~~~
 
 
-## 세팅
+## Setting
 
 <details>
 <summary>서버 실행 환경 설정</summary>
