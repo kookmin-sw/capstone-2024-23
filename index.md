@@ -64,7 +64,7 @@ E-mail: tjddnjs612@kookmin.ac.kr
 ~~~
 Student ID : ****5209
 role : Back-end, 데이터베이스 관리
-E-mail: skwhjj@kookmin.ac.kr
+E-mail: skwhjj@kookmin.ac.kr
 ~~~
 
 #### 이태영
