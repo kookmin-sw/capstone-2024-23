@@ -1,5 +1,7 @@
 ## [EYE-U](https://kookmin-sw.github.io/capstone-2024-23) 객체탐지를 활용한 시각장애인용 보행 보조 앱 <br>
 **[팀페이지 주소](https://github.com/kookmin-sw/capstone-2024-23)** <br>
+**[중간보고서](https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link)** <br>
+**[중간발표](https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true)**
 
 ## 프로젝트 소개
 EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
