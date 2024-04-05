@@ -18,7 +18,7 @@ To overcome these challenges, we have developed a navigation app specifically de
 
 ## 소개 영상
 [![소개영상](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/fbbb76cf-4f32-4450-8ba2-bba2e690552a)](https://www.youtube.com/watch?v=sgO9tWCrPbo)
-<br/>
+<br>
 
 
 ### EYE-U POINT
@@ -39,13 +39,13 @@ To overcome these challenges, we have developed a navigation app specifically de
 <img width="807" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/d903715b-b1cf-4354-9ff2-f6341856339c">
 
 
-### 팀 소개
+## 팀 소개
 #### 김호준
 <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/b438c3e6-63fd-4747-8596-9815e2b20f45" alt="김호준" width="150" height="150"><br>
 
 ~~~
 Student ID : ****5206
-role : AI 
+role : AI, 객체 인식 
 E-mail: hojuni9999@kookmin.ac.kr
 ~~~
 
@@ -54,7 +54,7 @@ E-mail: hojuni9999@kookmin.ac.kr
 
 ~~~
 Student ID : ****5207
-role : Front-end 
+role : Front-end, 지도
 E-mail: tjddnjs612@kookmin.ac.kr
 ~~~
 
@@ -63,7 +63,7 @@ E-mail: tjddnjs612@kookmin.ac.kr
 
 ~~~
 Student ID : ****5209
-role : Back-end 
+role : Back-end, 데이터베이스 관리
 E-mail: skwhjj@kookmin.ac.kr
 ~~~
 
@@ -72,7 +72,7 @@ E-mail: skwhjj@kookmin.ac.kr
 
 ~~~
 Student ID : ****5211
-role : Front-end 
+role : Front-end, TTS  
 E-mail: sam4886@kookmin.ac.kr
 ~~~
 
@@ -81,12 +81,12 @@ E-mail: sam4886@kookmin.ac.kr
 
 ~~~
 Student ID : ****5212
-role : Back-end
+role : Back-end, AWS 서버 관리
 E-mail: picetea44@kookmin.ac.kr
 ~~~
 
 
-## Setting
+## Setting
 
 <details>
 <summary>서버 실행 환경 설정</summary>
