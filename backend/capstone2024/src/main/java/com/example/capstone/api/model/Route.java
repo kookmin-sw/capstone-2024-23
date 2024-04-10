@@ -13,12 +13,13 @@ import lombok.Setter;
 public class Route {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nodeIndex;
+    private Long pointIndex;
 
     private String lat;
 
     private String lon;
+
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "member_uuid")

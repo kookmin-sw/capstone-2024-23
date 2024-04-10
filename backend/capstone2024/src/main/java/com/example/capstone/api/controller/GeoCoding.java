@@ -24,24 +24,33 @@ public class GeoCoding {
     }
 
     @GetMapping("/find-way")
-    public TmapPedestrianResponseDto checkPede(@RequestParam("startLat") String startLat
+    public Properties checkPede(@RequestParam("startLat") String startLat
                            , @RequestParam("startLon") String startLon
             , @RequestParam(value = "endAddress") String endAddress) throws Exception {
         System.out.println("startLat = " + startLat);
         System.out.println("startLon = " + startLon);
         System.out.println("endAddress = " + endAddress);
-        return pedestrianService.requestPedestrian(startLat,startLon,endAddress);
+        Properties properties = new Properties();
+        TmapPedestrianResponseDto tmapPedestrianResponseDto = pedestrianService.requestPedestrian(startLat, startLon, endAddress);
+        properties.setTotalDistance(tmapPedestrianResponseDto.getFeatures().getFirst().getProperties().getTotalDistance());
+        properties.setTotalTime(tmapPedestrianResponseDto.getFeatures().getFirst().getProperties().getTotalTime());
+        return properties;
     }
 
     @GetMapping("/start-navi")
-    public TmapPedestrianResponseDto confirmPede(@RequestParam("startLat") String startLat
+    public Properties confirmPede(@RequestParam("startLat") String startLat
             , @RequestParam("startLon") String startLon
             , @RequestParam("endAddress") String endAddress
             ,@RequestParam("uuid") String uuid) throws Exception {
         System.out.println("startLat = " + startLat);
         System.out.println("startLon = " + startLon);
         System.out.println("endAddress = " + endAddress);
-        return pedestrianService.requestPedestrian(startLat,startLon,endAddress);
+        System.out.println("uuid = " + uuid);
+        TmapPedestrianResponseDto tmapPedestrianResponseDto = pedestrianService.startPedestrianNavi(startLat, startLon, endAddress, uuid);
+        Properties properties = new Properties();
+        properties.setPointIndex(0);
+        properties.setDescription("경로 안내를 시작 합니다.");
+        return properties;
     }
 
     @GetMapping("/poi")
