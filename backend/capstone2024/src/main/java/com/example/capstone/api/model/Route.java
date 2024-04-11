@@ -14,7 +14,8 @@ import java.sql.SQLTransactionRollbackException;
 @NoArgsConstructor
 public class Route {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Long pointIndex;
 
     private String lat;

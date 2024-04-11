@@ -133,11 +133,6 @@ public class PedestrianService {
         String cleanedResponse = rawResponse.replace("\u0000", "");
 
         // 전처리된 응답을 DTO로 변환
-
-        /**
-         * 요청 보내서 목적지까지 거리 + 노드 좌표
-         * 노드( index, 위도, 경도)
-         */
         TmapPedestrianResponseDto responseDto = objectMapper.readValue(cleanedResponse, TmapPedestrianResponseDto.class)
                 .filteredPoint();
         System.out.println();
@@ -151,16 +146,12 @@ public class PedestrianService {
         return responseDto;
     }
 
-    public DistanceResponseDTO currentLocationCheck(String curLat,
-                                                    String curLon,
-                                                    String uuid,
-                                                    int nodeIndex){
-
-
+    public DistanceInfo currentLocationCheck(String curLat, String curLon,
+                                                    String uuid, int pointIndex){
 
         List<Route> path = routeRepository.findByMemberUuid(uuid);
-        String nextLon = path.get(nodeIndex).getLon();
-        String nextLat = path.get(nodeIndex).getLat();
+        String nextLon = path.get(pointIndex).getLon();
+        String nextLat = path.get(pointIndex).getLat();
 
         URI uri = uriBuilderService.buildUriDistanceInfo(curLon, curLat, nextLon, nextLat);
         HttpHeaders headers = new HttpHeaders();
@@ -170,9 +161,24 @@ public class PedestrianService {
 
         //api 호출
         DistanceResponseDTO body = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, DistanceResponseDTO.class).getBody();
-        return body;
 
+        DistanceInfo info = new DistanceInfo();
+        int dist = Integer.parseInt(body.getDistanceInfo().getDistance());
+        if (dist <= 1){
+            info.setDistance(String.valueOf(dist));
+            info.setPointIndex(pointIndex+1);
+            info.setDescription(path.get(pointIndex).getDescription());
+            return info;
+        }
+        else {
+            info.setDistance(String.valueOf(dist));
+            info.setPointIndex(pointIndex);
+            return info;
+        }
 
+    }
+    public void cancelNavi(String uuid){
+        routeRepository.deleteAllByMemberUuid(uuid);
     }
 
 }

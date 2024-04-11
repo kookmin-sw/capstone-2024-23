@@ -7,4 +7,8 @@ import lombok.Data;
 public class DistanceInfo {
     @JsonProperty("distance")
     private String distance;
+
+    private int pointIndex;
+
+    private String description;
 }

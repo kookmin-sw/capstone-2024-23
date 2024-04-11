@@ -61,20 +61,20 @@ public class GeoCoding {
     }
 
     @GetMapping("/current-location")
-    public DistanceResponseDTO currentLocation(@RequestParam("curLat") String curLat,
+    public DistanceInfo currentLocation(@RequestParam("curLat") String curLat,
                        @RequestParam("curLon") String curLon,
                        @RequestParam("uuid") String uuid,
-                       @RequestParam("curIndex") int nodeIndex){
-        DistanceResponseDTO distanceInfo = pedestrianService.currentLocationCheck(curLat, curLon, uuid, nodeIndex);
+                       @RequestParam("pointIndex") int pointIndex){
 
-        return distanceInfo;
+        return pedestrianService.currentLocationCheck(curLat, curLon, uuid, pointIndex);
     }
 
 
     @GetMapping("/cancel-navi")
-    public void cancelNavi(){
+    public String cancelNavi(@RequestParam("uuid") String uuid){
+        pedestrianService.cancelNavi(uuid);
 
-
+        return uuid + " 관련 모든 경로 삭제 완료";
     }
 
 
