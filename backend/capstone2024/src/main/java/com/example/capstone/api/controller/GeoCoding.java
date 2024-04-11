@@ -48,8 +48,8 @@ public class GeoCoding {
         System.out.println("uuid = " + uuid);
         TmapPedestrianResponseDto tmapPedestrianResponseDto = pedestrianService.startPedestrianNavi(startLat, startLon, endAddress, uuid);
         Properties properties = new Properties();
-        properties.setPointIndex(0);
-        properties.setDescription("경로 안내를 시작 합니다.");
+        properties.setPointIndex(1);
+        properties.setDescription("경로 안내를 시작 합니다."+tmapPedestrianResponseDto.getFeatures().getFirst().getProperties().getDescription());
         return properties;
     }
 
@@ -61,13 +61,15 @@ public class GeoCoding {
     }
 
     @GetMapping("/current-location")
-    public Poi currentLocation(@RequestParam("curLat") String curLat,
+    public DistanceResponseDTO currentLocation(@RequestParam("curLat") String curLat,
                        @RequestParam("curLon") String curLon,
                        @RequestParam("uuid") String uuid,
-                       @RequestParam("nodeIndex") int nodeIndex){
+                       @RequestParam("curIndex") int nodeIndex){
+        DistanceResponseDTO distanceInfo = pedestrianService.currentLocationCheck(curLat, curLon, uuid, nodeIndex);
 
-        return null;
+        return distanceInfo;
     }
+
 
     @GetMapping("/cancel-navi")
     public void cancelNavi(){

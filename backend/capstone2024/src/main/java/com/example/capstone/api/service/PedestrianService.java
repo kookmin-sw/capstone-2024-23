@@ -1,7 +1,6 @@
 package com.example.capstone.api.service;
 
-import com.example.capstone.api.dto.TmapPedestrianResponseDto;
-import com.example.capstone.api.dto.TmapPoiResponseDto;
+import com.example.capstone.api.dto.*;
 import com.example.capstone.api.model.Route;
 import com.example.capstone.api.repository.RouteRepository;
 import com.example.capstone.member.model.Member;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -151,5 +151,28 @@ public class PedestrianService {
         return responseDto;
     }
 
+    public DistanceResponseDTO currentLocationCheck(String curLat,
+                                                    String curLon,
+                                                    String uuid,
+                                                    int nodeIndex){
+
+
+
+        List<Route> path = routeRepository.findByMemberUuid(uuid);
+        String nextLon = path.get(nodeIndex).getLon();
+        String nextLat = path.get(nodeIndex).getLat();
+
+        URI uri = uriBuilderService.buildUriDistanceInfo(curLon, curLat, nextLon, nextLat);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("appKey", APPKEY);
+
+        HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
+
+        //api 호출
+        DistanceResponseDTO body = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, DistanceResponseDTO.class).getBody();
+        return body;
+
+
+    }
 
 }
