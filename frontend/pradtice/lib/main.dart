@@ -11,6 +11,7 @@ import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
 
+// import 'Tmap.dart';
 import 'GoogleMap.dart';
 import 'TextToSpeech.dart';
 import 'GetAndroidID.dart';
@@ -61,23 +62,118 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // _tapCount 변수를 사용하지 않고 바로 Navigator.push를 사용하여
-        // 싱글 탭 이벤트 처리 시 SttTab() 호출
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SttTab()),
-        );
-      },
+      // onTap: () {
+      //   // _tapCount 변수를 사용하지 않고 바로 Navigator.push를 사용하여
+      //   // 싱글 탭 이벤트 처리 시 SttTab() 호출
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => SttTab()),
+      //   );
+      // },
   child: Scaffold(
-        appBar: AppBar(
-          title: Text("메인화면"),
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        title: Text("메인화면"),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(4.0), // 밑줄의 높이 설정
+          child: Container(
+            color: Colors.black, // 밑줄의 색상 설정
+            height: 1.0, // 밑줄의 두께 설정
+          ),
         ),
-        body: Center(
-          child: Text('화면을 탭하세요', style: TextStyle(fontSize: 30)), // 텍스트 사이즈 조정
-        ),
-
       ),
+
+      body:Container(
+          color: Colors.blueGrey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 150.0), // 마이크 아이콘과 모드 버튼들 사이의 간격을 조정
+                child: ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SttTab()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(), // 버튼을 원형으로 만듦
+                    padding: EdgeInsets.all(20), // 원형 버튼 내부의 아이콘과의 padding
+                  ),
+                  child: Icon(Icons.mic, size: 40.0,color: Colors.blueGrey,), // 아이콘 크기를 조정하여 화면 비중 감소
+                ),
+              ),
+              Wrap( // ButtonBar 대신 Wrap 위젯을 사용하여 모드 버튼들을 더 유연하게 배치
+                spacing: 70.0, // 가로 간격
+                runSpacing: 50.0, // 세로 간격
+                alignment: WrapAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      // backgroundColor: Colors.,
+                      foregroundColor: Colors.blueGrey,
+
+                    ),
+                    child: Text('보행 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyGoogleMap()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      // backgroundColor: Colors.,
+                      foregroundColor: Colors.blueGrey,
+
+                    ),
+                    child: Text('경로 탐색 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ConvenienceMode()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      // backgroundColor: Colors.,
+                      foregroundColor: Colors.blueGrey,
+
+                    ),
+                    child: Text('즐겨찾기 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ConvenienceMode()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      // backgroundColor: Colors.,
+                      foregroundColor: Colors.blueGrey,
+
+                    ),
+                    child: Text('편의 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+
+
+
+  ),
     );
   }
 }
