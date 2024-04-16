@@ -173,12 +173,14 @@ public class PedestrianService {
         else {
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex);
+            info.setDescription("이동중");
             return info;
         }
 
     }
     public void cancelNavi(String uuid){
         routeRepository.deleteAllByMemberUuid(uuid);
+        System.out.println("uuid = " + uuid + "삭제 중");
     }
 
 }
