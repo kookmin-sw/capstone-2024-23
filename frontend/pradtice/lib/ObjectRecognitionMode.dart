@@ -1,201 +1,271 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:pradtice/camera/recognition.dart';
-import 'package:pradtice/camera/box_widget.dart';
-import 'package:pradtice/camera/camera_settings.dart';
-import 'camera/camera_view.dart';
-import 'location_permission.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'dart:async';
+import 'package:flutter_vision/flutter_vision.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ObjectRecognitionMode extends StatefulWidget {
-  const ObjectRecognitionMode({Key? key}) : super(key: key);
+enum Options { none, imagev5, imagev8, imagev8seg, frame }
 
-  @override
-  _ObjectRecognitionModeState createState() => _ObjectRecognitionModeState();
+late List<CameraDescription> cameras;
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+  runApp(
+    const MaterialApp(
+      home: ObjectReco(),
+    ),
+  );
 }
 
-class _ObjectRecognitionModeState extends State<ObjectRecognitionMode> {
-  /// Results to draw bounding boxes
-  List<Recognition>? results;
+class ObjectReco extends StatefulWidget {
+  const ObjectReco({Key? key}) : super(key: key);
 
-  /// Realtime stats
-  int totalElapsedTime = 0;
+  @override
+  State<ObjectReco> createState() => _ObjectRecoState();
+}
 
-  /// Scaffold Key
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-
-  /// 위치 권한 설정
-  MyLocation myLocation = MyLocation();
-
-  // 위치 추적 상태를 관리하는 새로운 변수
-  bool isTrackingLocation = true;
-
-  // UI 업데이트를 위한 콜백 함수
-  Function? onUpdate;
-
-  /// 카메라 권한 설정
-  camera_Permission() async {
-    var status = await Permission.camera.status;
-
-    if (status.isGranted) {
-      print('허락됨');
-    }
-    else if (status.isDenied) {
-      print('거절됨');
-      Permission.contacts.request();
-    }
-  }
-
-  // 위치 추적 상태를 변경하는 메소드
-  void toggleLocationTracking() {
-    isTrackingLocation = !isTrackingLocation;
-    if (isTrackingLocation) {
-      myLocation.getMyCurrentLocation();
-    } else {
-      print('위치 추적 종료');
-      // 추가적으로 위치 추적을 종료하는 로직을 구현하세요.
-    }
-    // UI 업데이트를 위한 콜백 함수 호출
-    onUpdate?.call();
-  }
-
+class _ObjectRecoState extends State<ObjectReco> {
+  late FlutterVision vision;
+  Options option = Options.frame;
   @override
   void initState() {
     super.initState();
-    if (isTrackingLocation) {
-      myLocation.getMyCurrentLocation();
-    }
-    camera_Permission();
+    vision = FlutterVision();
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await vision.closeTesseractModel();
+    await vision.closeYoloModel();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text(
-            '객체 인식 모드',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 15),
-          ),
-          actions : [
-            IconButton(onPressed: (){ toggleLocationTracking; }, icon : Icon(Icons.location_on)),
-            IconButton(onPressed: (){ camera_Permission(); }, icon : Icon(Icons.photo_camera)),
-          ]
-      ),
-      body: Stack(
-        children: [
-          CameraView(resultsCallback, updateElapsedTimeCallback),
-
-          /// 사진,위치 권한 아이콘 실행시 허가 기능 (미완성)
-          // Align(
-          //   alignment: Alignment.bottomRight, // 하단 우측에 배치
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(16.0), // 여백을 주어 가장자리와의 간격을 조정
-          //     child: IconButton(
-          //       icon: Icon(Icons.contacts),
-          //       onPressed: () {
-          //         myLocation.getMyCurrentLocation();
-          //       },
-          //     ),
-          //   ),
-          // ),
-
-          boundingBoxes(results),
-          Align(
-            alignment: Alignment.bottomCenter,
-            // SingleChildScrollView() -> 단일 자식만 가질수 있음
-            child: SingleChildScrollView(
-              child:
-              Column(
-                children: [
-                  resultsList(results),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child:
-                    Column(
-                      children: [
-                        statsRow('이미지 추론 시간:', '$totalElapsedTime ms'),
-                        statsRow('이미지 크기',
-                            '${CameraSettings.inputImageSize?.width} X ${CameraSettings.inputImageSize?.height}'),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+      body: task(option),);
   }
 
-  /// Returns Stack of bounding boxes
-  Widget boundingBoxes(List<Recognition>? results) {
-    if (results == null) {
-      return Container();
+  Widget task(Options option) {
+    if (option == Options.frame) {
+      return YoloVideo(vision: vision);
+    }
+    return const Center(child: Text("Choose Task"));
+  }
+}
+
+class YoloVideo extends StatefulWidget {
+  final FlutterVision vision;
+  const YoloVideo({Key? key, required this.vision}) : super(key: key);
+
+  @override
+  State<YoloVideo> createState() => _YoloVideoState();
+}
+
+class _YoloVideoState extends State<YoloVideo> {
+  late CameraController controller;
+  late List<Map<String, dynamic>> yoloResults;
+  CameraImage? cameraImage;
+  bool isLoaded = false;
+  bool isDetecting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    cameras = await availableCameras();
+    controller = CameraController(cameras[0], ResolutionPreset.medium);
+    controller.initialize().then((value) {
+      loadYoloModel().then((value) {
+        setState(() {
+          isLoaded = true;
+          isDetecting = false;
+          yoloResults = [];
+        });
+      });
+    });
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    if (!isLoaded) {
+      return const Scaffold(
+        body: Center(
+          child: Text("Model not loaded, waiting for it"),
+        ),
+      );
     }
     return Stack(
-      children: results
-          .map((e) => BoxWidget(
-        result: e,
-      ))
-          .toList(),
-    );
-  }
-
-  Widget resultsList(List<Recognition>? results) {
-    if (results == null) {
-      return Container();
-    }
-    return SizedBox(
-      height: 120,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
-        itemCount: results.length,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 20,
-            child: ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${(index + 1)}. 객체명: ${results[index].label}',
-                      style: TextStyle(fontSize: 13)),
-                  Text(
-                      '예츨확률: ${(results[index].score! * 100).toStringAsFixed(1)} %',
-                      style: TextStyle(fontSize: 13)),
-                ],
-              ),
+      fit: StackFit.expand,
+      children: [
+        AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: CameraPreview(
+            controller,
+          ),
+        ),
+        ...displayBoxesAroundRecognizedObjects(size),
+        Positioned(
+          bottom: 75,
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                  width: 5, color: Colors.white, style: BorderStyle.solid),
             ),
-          );
-        },
-      ),
+            child: isDetecting
+                ? IconButton(
+              onPressed: () async {
+                stopDetection();
+              },
+              icon: const Icon(
+                Icons.stop,
+                color: Colors.red,
+              ),
+              iconSize: 50,
+            )
+                : IconButton(
+              onPressed: () async {
+                await startDetection();
+              },
+              icon: const Icon(
+                Icons.play_arrow,
+                color: Colors.white,
+              ),
+              iconSize: 50,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  /// Callback to get inference results from [CameraView]
-  void resultsCallback(List<Recognition> results) {
+  Future<void> loadYoloModel() async {
+    await widget.vision.loadYoloModel(
+        labels: 'assets/labels.txt',
+        modelPath: 'assets/yolov5n.tflite',
+        modelVersion: "yolov5",
+        numThreads: 2,
+        useGpu: true);
     setState(() {
-      this.results = results;
+      isLoaded = true;
     });
   }
 
-  void updateElapsedTimeCallback(int elapsedTime) {
+  Future<void> yoloOnFrame(CameraImage cameraImage) async {
+    final result = await widget.vision.yoloOnFrame(
+        bytesList: cameraImage.planes.map((plane) => plane.bytes).toList(),
+        imageHeight: cameraImage.height,
+        imageWidth: cameraImage.width,
+        iouThreshold: 0.4,
+        confThreshold: 0.4,
+        classThreshold: 0.5);
+    if (result.isNotEmpty) {
+      setState(() {
+        yoloResults = result;
+      });
+    }
+  }
+
+  Future<void> startDetection() async {
     setState(() {
-      totalElapsedTime = elapsedTime;
+      isDetecting = true;
     });
+    if (controller.value.isStreamingImages) {
+      return;
+    }
+    await controller.startImageStream((image) async {
+      if (isDetecting) {
+        cameraImage = image;
+        yoloOnFrame(image);
+      }
+    });
+  }
+
+  Future<void> stopDetection() async {
+    setState(() {
+      isDetecting = false;
+      yoloResults.clear();
+    });
+  }
+
+  List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
+    if (yoloResults.isEmpty) return [];
+    double factorX = screen.width / (cameraImage?.height ?? 1);
+    double factorY = screen.height / (cameraImage?.width ?? 1);
+
+    Color colorPick = const Color.fromARGB(255, 50, 233, 30);
+
+    return yoloResults.map((result) {
+      return Positioned(
+        left: result["box"][0] * factorX,
+        top: result["box"][1] * factorY,
+        width: (result["box"][2] - result["box"][0]) * factorX,
+        height: (result["box"][3] - result["box"][1]) * factorY,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            border: Border.all(color: Colors.pink, width: 2.0),
+          ),
+          child: Text(
+            "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
+            style: TextStyle(
+              background: Paint()..color = colorPick,
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      );
+    }).toList();
   }
 }
 
-/// Row for one Stats field
-Padding statsRow(left, right) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(left), Text(right)],
-    ),
-  );
+class PolygonPainter extends CustomPainter {
+  final List<Map<String, double>> points;
+
+  PolygonPainter({required this.points});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = const Color.fromARGB(129, 255, 2, 124)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    if (points.isNotEmpty) {
+      path.moveTo(points[0]['x']!, points[0]['y']!);
+      for (var i = 1; i < points.length; i++) {
+        path.lineTo(points[i]['x']!, points[i]['y']!);
+      }
+      path.close();
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
 }
+

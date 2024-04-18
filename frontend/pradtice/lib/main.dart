@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
+                        MaterialPageRoute(builder: (context) => ObjectReco()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -274,7 +274,7 @@ class _SttTabState extends State<SttTab> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
+                  MaterialPageRoute(builder: (context) => ObjectReco()),
                 );
               }
               else if (_lastWords == '경로 탐색 모드') {
