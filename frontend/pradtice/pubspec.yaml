@@ -49,12 +49,12 @@ dependencies:
 
   flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
-    path: C:\Users\User\Desktop\flutter_vision-master
+    path: /Users/su_wo/Desktop/capstone-2024-23/frontend/flutter_vision-master
 
-  tmap_ui_sdk:
-    git:
-      url: https://github.com/TmapSDK/TmapUI_FlutterSDK.git
-      ref: 1.0.26 # version. git tag name
+#  tmap_ui_sdk:
+#    git:
+#      url: https://github.com/TmapSDK/TmapUI_FlutterSDK.git
+#      ref: 1.0.26 # version. git tag name
 
   http: ^0.13.4
   test: ^1.24.9

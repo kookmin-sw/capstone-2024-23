@@ -161,7 +161,7 @@ class _YoloVideoState extends State<YoloVideo> {
   Future<void> loadYoloModel() async {
     await widget.vision.loadYoloModel(
         labels: 'assets/labels.txt',
-        modelPath: 'assets/yolov5n.tflite',
+        modelPath: 'assets/yolov5n.tflite', // 모델 수정 부분
         modelVersion: "yolov5",
         numThreads: 2,
         useGpu: true);
@@ -178,8 +178,11 @@ class _YoloVideoState extends State<YoloVideo> {
         iouThreshold: 0.4,
         confThreshold: 0.4,
         classThreshold: 0.5);
+
     if (result.isNotEmpty) {
       setState(() {
+        //코드 수정부분
+        print("결과 보여줄게 잘: $result");
         yoloResults = result;
       });
     }
@@ -218,7 +221,7 @@ class _YoloVideoState extends State<YoloVideo> {
       return Positioned(
         left: result["box"][0] * factorX,
         top: result["box"][1] * factorY,
-        width: (result["box"][2] - result["box"][0]) * factorX,
+          width: (result["box"][2] - result["box"][0]) * factorX,
         height: (result["box"][3] - result["box"][1]) * factorY,
         child: Container(
           decoration: BoxDecoration(
