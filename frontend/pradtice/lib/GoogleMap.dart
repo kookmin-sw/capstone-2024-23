@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'location_permission.dart';
 
 class MyGoogleMap extends StatelessWidget {
   @override
@@ -18,6 +19,7 @@ class _MapSampleState extends State<_MapSample> {
   Completer<GoogleMapController> _controller = Completer();
 
   Set<Marker> _markers = {};
+  MyLocation myLocation = MyLocation();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.5271883, 126.9659283),
@@ -71,7 +73,7 @@ class _MapSampleState extends State<_MapSample> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton.extended(
-            onPressed: _goToTheLake,
+            onPressed: (){myLocation.getMyCurrentLocation();},
             label: Text('To the lake!'),
             icon: Icon(Icons.directions_boat),
           ),
