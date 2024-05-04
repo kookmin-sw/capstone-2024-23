@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart'; //권한 설정
-import 'package:geolocator/geolocator.dart'; // 위치 패키지
-import 'ObjectRecognitionMode.dart'; // 새로 만든 파일 import
-import 'location_permission.dart'; // 위치 파일 import
+import 'ObjectRecognitionMode.dart';
 import 'sever.dart'; // 서버 연동 파일 import
-import 'package:http/http.dart' as http; // http 사용 패키지
-import 'dart:convert'; //json 변환 패키지
 import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
@@ -14,7 +8,6 @@ import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
 // import 'Tmap.dart';
 import 'GoogleMap.dart';
 import 'TextToSpeech.dart';
-import 'GetAndroidID.dart';
 
 void main() {
   runApp(
@@ -48,16 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // GoogleMap.dart 에서의 GoogleMap 클래스 상속
   MyGoogleMap mygoogleMap = MyGoogleMap();
-
   //앱 실행시 백그라운드 실행
 
   @override
   void initState() {
     super.initState();
-    sever.getData();
     tts.setMessage('화면을 탭하세요');
     tts.speak();
-    GetID();
+    sever.getID();
   }
   @override
   Widget build(BuildContext context) {
@@ -126,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyGoogleMap()),
+                        MaterialPageRoute(builder: (context) => NaviTap()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -135,36 +126,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       foregroundColor: Colors.blueGrey,
 
                     ),
-                    child: Text('경로 탐색 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                    child: Text('내비게이션 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ConvenienceMode()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
-                      // backgroundColor: Colors.,
-                      foregroundColor: Colors.blueGrey,
 
-                    ),
-                    child: Text('즐겨찾기 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ConvenienceMode()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
-                      // backgroundColor: Colors.,
-                      foregroundColor: Colors.blueGrey,
+                  // TextButton(onPressed: (){
+                  //   setState(() {
+                  //     sever.start_navi();
+                  //   });
+                  // }, child: Text('경로안내 시작')),
+                  // TextButton(onPressed: (){
+                  //   setState(() {
+                  //     sever.current_location();
+                  //   });
+                  // }, child: Text('경로 안내')),
+                  // TextButton(onPressed: (){
+                  //   setState(() {
+                  //     sever.cancel_navi();
+                  //   });
+                  // }, child: Text('경로 종료')),
+                  // Text(sever.description),
+                  // Text(sever.distance+'M'),
+                  // Text('IdxNode : ${sever.IdxNode}')
 
-                    ),
-                    child: Text('편의 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-                  ),
                 ],
               )
             ],

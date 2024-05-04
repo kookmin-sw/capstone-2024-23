@@ -99,3 +99,4 @@ class _MapSampleState extends State<_MapSample> {
     controller.animateCamera(CameraUpdate.newCameraPosition(_kNamsanTower));
   }
 }
+
