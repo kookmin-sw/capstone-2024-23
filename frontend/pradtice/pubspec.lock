@@ -310,7 +310,7 @@ packages:
   flutter_vision:
     dependency: "direct main"
     description:
-      path: "/Users/su_wo/Desktop/capstone-2024-23/frontend/flutter_vision-master"
+      path: "C:\\Users\\User\\Desktop\\capstone-5.7\\frontend\\flutter_vision-master"
       relative: false
     source: path
     version: "1.1.4"

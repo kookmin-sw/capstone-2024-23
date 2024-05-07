@@ -139,11 +139,13 @@ class Sever {
       } else {
         print("전송 완료");
         print(response.body);
+        myLocation.cancelLocationUpdate(); // 위치 업데이트 취소
       }
     }catch(e){
       print("에러코드 : $e");
     }
   }
+
 
   getID(){
     GetID getid = GetID();

@@ -1,9 +1,11 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
 
 class MyLocation {
   late double latitude;
   late double longitude;
+  Timer? locationTimer; // 타이머를 저장할 변수
 
   Future<void> getMyCurrentLocation() async {
     // 위치권한을 가지고 있는지 확인
@@ -11,12 +13,14 @@ class MyLocation {
 
     if (status_position.isGranted) {
       // 권한이 있는 경우, 10초마다 위치 정보를 출력합니다.
+      locationTimer = Timer.periodic(Duration(seconds: 1), (Timer t) async {
         Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
         latitude = position.latitude;
         longitude = position.longitude;
 
         print("위도: $latitude , 경도: $longitude");
+      });
     } else {
       // 권한이 없는 경우
       print("위치 권한이 필요합니다.");
@@ -26,13 +30,14 @@ class MyLocation {
 
       // 사용자가 권한을 허용한 경우
       if (status_position_request.isGranted) {
+        locationTimer = Timer.periodic(Duration(seconds: 1), (Timer t) async {
           Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
           latitude = position.latitude;
           longitude = position.longitude;
 
           print("위도: $latitude , 경도: $longitude");
-
+        });
       } else {
         // 사용자가 권한을 거부한 경우
         print("위치 권한이 거부되었습니다.");
@@ -40,4 +45,9 @@ class MyLocation {
     }
   }
 
+  // 위치 정보 업데이트를 취소하는 메서드
+  void cancelLocationUpdate() {
+    locationTimer?.cancel();
+  }
 }
+

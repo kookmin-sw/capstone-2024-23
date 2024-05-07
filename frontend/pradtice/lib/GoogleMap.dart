@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'location_permission.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:pradtice/location_permission.dart';
 
 class MyGoogleMap extends StatelessWidget {
   @override
@@ -17,45 +18,54 @@ class _MapSample extends StatefulWidget {
 
 class _MapSampleState extends State<_MapSample> {
   Completer<GoogleMapController> _controller = Completer();
-
   Set<Marker> _markers = {};
-  MyLocation myLocation = MyLocation();
+  Position? _currentPosition;
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.5271883, 126.9659283),
     zoom: 14.4746,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
-  // 남산타워 위치 설정
-  static final CameraPosition _kNamsanTower = CameraPosition(
-    target: LatLng(37.5511694, 126.9882266),
-    zoom: 14.4746,
-  );
-
   @override
   void initState() {
     super.initState();
-    _initializeMarkers();
+    _getCurrentLocation();
   }
 
-  void _initializeMarkers() {
+  _getCurrentLocation() {
+    Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high)).listen((Position position) {
+      setState(() {
+        _currentPosition = position;
+        _updateMarker(position);
+      });
+    });
+  }
+
+  void _updateMarker(Position position) {
+    _markers.clear(); // 기존 마커를 제거하고 새 위치에 마커를 추가합니다.
     _markers.add(
       Marker(
-        markerId: MarkerId('_kGooglePlex'),
-        position: _kGooglePlex.target,
+        markerId: MarkerId('currentPosition'),
+        position: LatLng(position.latitude, position.longitude),
         infoWindow: InfoWindow(
-          title: 'Google Plex',
-          snippet: 'Google Headquarters',
+          title: '내 위치',
         ),
         icon: BitmapDescriptor.defaultMarker,
       ),
     );
+    _moveCameraToCurrentPosition();
+  }
+
+  Future<void> _moveCameraToCurrentPosition() async {
+    if (_currentPosition != null) {
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+          zoom: 14.4746,
+        ),
+      ));
+    }
   }
 
   @override
@@ -69,34 +79,11 @@ class _MapSampleState extends State<_MapSample> {
           _controller.complete(controller);
         },
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton.extended(
-            onPressed: (){myLocation.getMyCurrentLocation();},
-            label: Text('To the lake!'),
-            icon: Icon(Icons.directions_boat),
-          ),
-          SizedBox(width: 16), // 버튼 사이의 간격
-          FloatingActionButton.extended(
-            onPressed: _goToNamsanTower,
-            label: Text('To Namsan Tower!'),
-            icon: Icon(Icons.landscape),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _getCurrentLocation,
+        label: Text('내 위치 찾기'),
+        icon: Icon(Icons.location_searching),
       ),
     );
   }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
-
-  // 남산타워로 이동하는 함수
-  Future<void> _goToNamsanTower() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kNamsanTower));
-  }
 }
-

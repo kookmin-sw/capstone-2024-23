@@ -73,9 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-
+      backgroundColor: Colors.blueGrey, // Scaffold의 배경색을 설정
       body:Container(
-          color: Colors.blueGrey,
+          // color: Colors.blueGrey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,6 +127,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     ),
                     child: Text('내비게이션 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyGoogleMap()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      // backgroundColor: Colors.,
+                      foregroundColor: Colors.blueGrey,
+
+                    ),
+                    child: Text('지도 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                   ),
 
                   // TextButton(onPressed: (){
