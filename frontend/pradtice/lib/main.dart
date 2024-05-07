@@ -74,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
+      backgroundColor: Colors.blueGrey, // Scaffold의 배경색을 설정
       body:Container(
           color: Colors.blueGrey,
           child: Column(
@@ -95,60 +96,62 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Icon(Icons.mic, size: 40.0,color: Colors.blueGrey,), // 아이콘 크기를 조정하여 화면 비중 감소
                 ),
               ),
-              Wrap( // ButtonBar 대신 Wrap 위젯을 사용하여 모드 버튼들을 더 유연하게 배치
-                spacing: 70.0, // 가로 간격
-                runSpacing: 50.0, // 세로 간격
-                alignment: WrapAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ObjectReco()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
-                      // backgroundColor: Colors.,
-                      foregroundColor: Colors.blueGrey,
+              Center(
+                child: Wrap( // ButtonBar 대신 Wrap 위젯을 사용하여 모드 버튼들을 더 유연하게 배치
+                  spacing: 70.0, // 가로 간격
+                  runSpacing: 50.0, // 세로 간격
+                  alignment: WrapAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ObjectReco()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 50),
+                        // backgroundColor: Colors.,
+                        foregroundColor: Colors.blueGrey,
 
+                      ),
+                      child: Text('보행 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                     ),
-                    child: Text('보행 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NaviTap()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
-                      // backgroundColor: Colors.,
-                      foregroundColor: Colors.blueGrey,
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NaviTap()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 50),
+                        // backgroundColor: Colors.,
+                        foregroundColor: Colors.blueGrey,
 
+                      ),
+                      child: Text('내비게이션 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                     ),
-                    child: Text('내비게이션 모드', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-                  ),
 
-                  // TextButton(onPressed: (){
-                  //   setState(() {
-                  //     sever.start_navi();
-                  //   });
-                  // }, child: Text('경로안내 시작')),
-                  // TextButton(onPressed: (){
-                  //   setState(() {
-                  //     sever.current_location();
-                  //   });
-                  // }, child: Text('경로 안내')),
-                  // TextButton(onPressed: (){
-                  //   setState(() {
-                  //     sever.cancel_navi();
-                  //   });
-                  // }, child: Text('경로 종료')),
-                  // Text(sever.description),
-                  // Text(sever.distance+'M'),
-                  // Text('IdxNode : ${sever.IdxNode}')
+                    // TextButton(onPressed: (){
+                    //   setState(() {
+                    //     sever.start_navi();
+                    //   });
+                    // }, child: Text('경로안내 시작')),
+                    // TextButton(onPressed: (){
+                    //   setState(() {
+                    //     sever.current_location();
+                    //   });
+                    // }, child: Text('경로 안내')),
+                    // TextButton(onPressed: (){
+                    //   setState(() {
+                    //     sever.cancel_navi();
+                    //   });
+                    // }, child: Text('경로 종료')),
+                    // Text(sever.description),
+                    // Text(sever.distance+'M'),
+                    // Text('IdxNode : ${sever.IdxNode}')
 
-                ],
+                  ],
+                ),
               )
             ],
           ),
