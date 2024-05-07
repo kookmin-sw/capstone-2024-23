@@ -11,12 +11,12 @@ class MyLocation {
 
     if (status_position.isGranted) {
       // 권한이 있는 경우, 10초마다 위치 정보를 출력합니다.
-        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-        latitude = position.latitude;
-        longitude = position.longitude;
+      latitude = position.latitude;
+      longitude = position.longitude;
 
-        print("위도: $latitude , 경도: $longitude");
+      print("위도: $latitude , 경도: $longitude");
     } else {
       // 권한이 없는 경우
       print("위치 권한이 필요합니다.");
@@ -26,12 +26,12 @@ class MyLocation {
 
       // 사용자가 권한을 허용한 경우
       if (status_position_request.isGranted) {
-          Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-          latitude = position.latitude;
-          longitude = position.longitude;
+        latitude = position.latitude;
+        longitude = position.longitude;
 
-          print("위도: $latitude , 경도: $longitude");
+        print("위도: $latitude , 경도: $longitude");
 
       } else {
         // 사용자가 권한을 거부한 경우

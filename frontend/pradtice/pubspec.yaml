@@ -50,10 +50,10 @@ dependencies:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
     path: C:\Users\User\Desktop\capstone-5.7R\frontend\flutter_vision-master
 
-#  tmap_ui_sdk:
-#    git:
-#      url: https://github.com/TmapSDK/TmapUI_FlutterSDK.git
-#      ref: 1.0.26 # version. git tag name
+  #  tmap_ui_sdk:
+  #    git:
+  #      url: https://github.com/TmapSDK/TmapUI_FlutterSDK.git
+  #      ref: 1.0.26 # version. git tag name
 
   http: ^0.13.4
   test: ^1.24.9
@@ -63,11 +63,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-#  camera:
-#      git:
-#        url: https://github.com/flutter/plugins
-#        path: packages/camera/camera
-#        ref: 9e46048ad2e1f085c1e8f6c77391fa52025e681f
+  #  camera:
+  #      git:
+  #        url: https://github.com/flutter/plugins
+  #        path: packages/camera/camera
+  #        ref: 9e46048ad2e1f085c1e8f6c77391fa52025e681f
 
   tflite_flutter: ^0.9.1
   tflite_flutter_helper: ^0.2.1
@@ -97,7 +97,7 @@ flutter:
     - assets/labels.txt
     - assets/yolov5n.tflite
     - assets/tessdata/
-#    - assets/best-fp16.tflite # 이후 객체 인식 커스터마이징 사용시에 사용
+  #    - assets/best-fp16.tflite # 이후 객체 인식 커스터마이징 사용시에 사용
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

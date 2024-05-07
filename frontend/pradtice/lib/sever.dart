@@ -181,16 +181,16 @@ class _testmapState extends State<testmap> {
   void _centerloca(LatLng posi){
     setState(() {
       _center = CameraPosition(
-        target: posi,
-        zoom: 14
+          target: posi,
+          zoom: 14
       );
     });
   }
   void nodeloca(LatLng posi){
     setState(() {
       nodeloc = CameraPosition(
-        target:posi,
-        zoom: 14
+          target:posi,
+          zoom: 14
       );
     });
   }
@@ -199,20 +199,20 @@ class _testmapState extends State<testmap> {
       zoom: 14
   );
   CameraPosition nodeloc = CameraPosition(
-    target: LatLng(37.5665, 126.9780),
-    zoom: 14
+      target: LatLng(37.5665, 126.9780),
+      zoom: 14
   );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(myLocationEnabled: true,
-        initialCameraPosition: _center,
-        markers: {
-          Marker(
-            markerId: MarkerId('IdxNode : ${sever.IdxNode}'),
-            position: LatLng(double.parse(sever.nodeLat),double.parse(sever.nodeLon))
-          )
-        }
+          initialCameraPosition: _center,
+          markers: {
+            Marker(
+                markerId: MarkerId('IdxNode : ${sever.IdxNode}'),
+                position: LatLng(double.parse(sever.nodeLat),double.parse(sever.nodeLon))
+            )
+          }
       ),
     );
   }
