@@ -38,6 +38,7 @@ dependencies:
   camera: ^0.9.8+1
   image_picker: ^0.8.6+3
   flutter_speed_dial: ^6.2.0
+  vibration : ^1.7.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -48,7 +49,7 @@ dependencies:
   provider: ^6.0.3
   flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
-    path: C:\Users\User\Desktop\capstone-5.7R\frontend\flutter_vision-master
+    path: C:\asdf\capstone-2024-23\frontend\flutter_vision-master
 
   #  tmap_ui_sdk:
   #    git:

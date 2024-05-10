@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     tts.setMessage('화면을 탭하세요');
     tts.speak();
-    sever.getID();
+
   }
   @override
   Widget build(BuildContext context) {

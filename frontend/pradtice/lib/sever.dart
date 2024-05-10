@@ -3,9 +3,8 @@ import 'package:http/http.dart' as http; // http 사용 패키지
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pradtice/location_permission.dart'; //json 변환 패키지
-import 'GetAndroidID.dart';
 import 'dart:async';
-
+import 'GetAndroidID.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class NaviTap extends StatefulWidget {
@@ -80,8 +79,16 @@ class Sever {
   var distance = '0';
   var uuid = '';
 
+  GetID getID = GetID();
+
+  setid(){
+    uuid = getID.id;
+    print('uuid = $uuid');
+  }
+
 
   Future<void> start_navi() async {
+    setid();
     myLocation.getMyCurrentLocation();
     Lat = myLocation.latitude;
     Lon = myLocation.longitude;
@@ -143,12 +150,6 @@ class Sever {
     }catch(e){
       print("에러코드 : $e");
     }
-  }
-
-  getID(){
-    GetID getid = GetID();
-    uuid = getid.id;
-    print('uuid : '+uuid);
   }
 
 }
