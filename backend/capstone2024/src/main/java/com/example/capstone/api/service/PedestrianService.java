@@ -164,16 +164,20 @@ public class PedestrianService {
 
         DistanceInfo info = new DistanceInfo();
         int dist = Integer.parseInt(body.getDistanceInfo().getDistance());
-        if (dist <= 1){
+        if (dist <= 3){
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex+1);
             info.setDescription(path.get(pointIndex).getDescription());
+            info.setLat(nextLat);
+            info.setLon(nextLon);
             return info;
         }
         else {
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex);
             info.setDescription("이동중");
+            info.setLat(nextLat);
+            info.setLon(nextLon);
             return info;
         }
 

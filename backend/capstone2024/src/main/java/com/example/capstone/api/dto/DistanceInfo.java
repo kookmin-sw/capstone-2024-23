@@ -11,4 +11,8 @@ public class DistanceInfo {
     private int pointIndex;
 
     private String description;
+
+    private String lat;
+    private String lon;
+
 }
