@@ -8,11 +8,14 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'dart:async';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:image_picker/image_picker.dart';
+import 'TextToSpeech.dart';
+import 'package:vibration/vibration.dart';
 
 enum Options { none, imagev5, imagev8, imagev8seg, frame }
 
 late List<CameraDescription> cameras;
-main() async {
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DartPluginRegistrant.ensureInitialized();
   runApp(
@@ -21,6 +24,7 @@ main() async {
     ),
   );
 }
+
 
 class ObjectReco extends StatefulWidget {
   const ObjectReco({Key? key}) : super(key: key);
@@ -32,6 +36,7 @@ class ObjectReco extends StatefulWidget {
 class _ObjectRecoState extends State<ObjectReco> {
   late FlutterVision vision;
   Options option = Options.frame;
+
   @override
   void initState() {
     super.initState();
@@ -48,7 +53,8 @@ class _ObjectRecoState extends State<ObjectReco> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: task(option),);
+      body: task(option),
+    );
   }
 
   Widget task(Options option) {
@@ -61,6 +67,7 @@ class _ObjectRecoState extends State<ObjectReco> {
 
 class YoloVideo extends StatefulWidget {
   final FlutterVision vision;
+
   const YoloVideo({Key? key, required this.vision}) : super(key: key);
 
   @override
@@ -73,6 +80,8 @@ class _YoloVideoState extends State<YoloVideo> {
   CameraImage? cameraImage;
   bool isLoaded = false;
   bool isDetecting = false;
+  TTS tts = TTS(message: '');
+
 
   @override
   void initState() {
@@ -80,17 +89,16 @@ class _YoloVideoState extends State<YoloVideo> {
     init();
   }
 
-  init() async {
+  // 카메라 초기화
+  void init() async {
     cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.medium);
-    controller.initialize().then((value) {
-      loadYoloModel().then((value) {
-        setState(() {
-          isLoaded = true;
-          isDetecting = false;
-          yoloResults = [];
-        });
-      });
+    await controller.initialize();
+    await loadYoloModel();
+    setState(() {
+      isLoaded = true;
+      isDetecting = false;
+      yoloResults = [];
     });
   }
 
@@ -115,9 +123,7 @@ class _YoloVideoState extends State<YoloVideo> {
       children: [
         AspectRatio(
           aspectRatio: controller.value.aspectRatio,
-          child: CameraPreview(
-            controller,
-          ),
+          child: CameraPreview(controller),
         ),
         ...displayBoxesAroundRecognizedObjects(size),
         Positioned(
@@ -129,26 +135,16 @@ class _YoloVideoState extends State<YoloVideo> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                  width: 5, color: Colors.white, style: BorderStyle.solid),
-            ),
-            child: isDetecting
-                ? IconButton(
-              onPressed: () async {
-                stopDetection();
-              },
-              icon: const Icon(
-                Icons.stop,
-                color: Colors.red,
-              ),
-              iconSize: 50,
-            )
-                : IconButton(
-              onPressed: () async {
-                await startDetection();
-              },
-              icon: const Icon(
-                Icons.play_arrow,
+                width: 5,
                 color: Colors.white,
+                style: BorderStyle.solid,
+              ),
+            ),
+            child: IconButton(
+              onPressed: isDetecting ? stopDetection : startDetection,
+              icon: Icon(
+                isDetecting ? Icons.stop : Icons.play_arrow,
+                color: isDetecting ? Colors.red : Colors.white,
               ),
               iconSize: 50,
             ),
@@ -158,51 +154,33 @@ class _YoloVideoState extends State<YoloVideo> {
     );
   }
 
+  // YOLO 모델 로드
   Future<void> loadYoloModel() async {
     await widget.vision.loadYoloModel(
-        labels: 'assets/labels.txt',
-        modelPath: 'assets/yolov5n.tflite', // 모델 수정 부분
-        modelVersion: "yolov5",
-        numThreads: 2,
-        useGpu: true);
-    setState(() {
-      isLoaded = true;
-    });
+      labels: 'assets/labels.txt',
+      modelPath: 'assets/yolov5n.tflite',
+      modelVersion: "yolov5",
+      numThreads: 2,
+      useGpu: true,
+    );
   }
 
-  Future<void> yoloOnFrame(CameraImage cameraImage) async {
-    final result = await widget.vision.yoloOnFrame(
-        bytesList: cameraImage.planes.map((plane) => plane.bytes).toList(),
-        imageHeight: cameraImage.height,
-        imageWidth: cameraImage.width,
-        iouThreshold: 0.4,
-        confThreshold: 0.4,
-        classThreshold: 0.5);
-
-    if (result.isNotEmpty) {
-      setState(() {
-        //코드 수정부분
-        print("결과 보여줄게 잘: $result");
-        yoloResults = result;
-      });
-    }
-  }
-
+  // 객체 탐지 시작
   Future<void> startDetection() async {
     setState(() {
       isDetecting = true;
     });
-    if (controller.value.isStreamingImages) {
-      return;
+    if (!controller.value.isStreamingImages) {
+      await controller.startImageStream((image) {
+        if (isDetecting) {
+          cameraImage = image;
+          yoloOnFrame(image);
+        }
+      });
     }
-    await controller.startImageStream((image) async {
-      if (isDetecting) {
-        cameraImage = image;
-        yoloOnFrame(image);
-      }
-    });
   }
 
+  // 객체 탐지 중지
   Future<void> stopDetection() async {
     setState(() {
       isDetecting = false;
@@ -210,18 +188,97 @@ class _YoloVideoState extends State<YoloVideo> {
     });
   }
 
+  // 카메라 프레임에서 YOLO 객체 탐지
+  Future<void> yoloOnFrame(CameraImage cameraImage) async {
+    final result = await widget.vision.yoloOnFrame(
+      bytesList: cameraImage.planes.map((plane) => plane.bytes).toList(),
+      imageHeight: cameraImage.height,
+      imageWidth: cameraImage.width,
+      iouThreshold: 0.4,
+      confThreshold: 0.4,
+      classThreshold: 0.5,
+    );
+
+    if (result.isNotEmpty) {
+      setState(() {
+        // 필터링할 클래스 레이블
+        List<String> targetLabels = [
+          "bicycle",
+          "car",
+          "motorbike",
+          "traffic light",
+          "fire hydrant",
+          "stop sign",
+          "parking meter",
+          "person",
+          "chair"
+        ];
+
+        // 필터링된 결과를 저장할 리스트
+        List<Map<String, dynamic>> filteredResults = [];
+
+        // 필터링된 결과를 추출
+        for (var obj in result) {
+          if (targetLabels.contains(obj['tag'])) {
+            filteredResults.add(obj);
+          }
+        }
+
+        // 필터링된 결과를 사용하여 작업 수행
+        for (var obj in filteredResults) {
+          double bottomY = obj['box'][1] + obj['box'][3];
+          if (bottomY > 730 && targetLabels.contains(obj['tag'])) {
+            tts.setMessage('위험');
+            tts.speak();
+            Vibration.vibrate(duration: 500);
+          }
+          print("전체 값 : $result");
+          print("첫 번째 물체의 바운딩 박스 하단 Y 좌표: $bottomY");
+        }
+
+        // 필터링된 결과를 yoloResults에 업데이트
+        yoloResults = filteredResults;
+      });
+    }
+  }
+
+  // 객체를 인식하여 박스 표시
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
     if (yoloResults.isEmpty) return [];
+
     double factorX = screen.width / (cameraImage?.height ?? 1);
     double factorY = screen.height / (cameraImage?.width ?? 1);
 
+    // 필터링할 클래스 레이블
+    List<String> targetLabels = [
+      "bicycle",
+      "car",
+      "motorbike",
+      "traffic light",
+      "fire hydrant",
+      "stop sign",
+      "parking meter",
+      "person",
+      "chair"
+    ];
+
+    // 필터링된 결과를 저장할 리스트
+    List<Map<String, dynamic>> filteredResults = [];
+
+    // 필터링된 결과를 추출
+    for (var result in yoloResults) {
+      if (targetLabels.contains(result['tag'])) {
+        filteredResults.add(result);
+      }
+    }
+
     Color colorPick = const Color.fromARGB(255, 50, 233, 30);
 
-    return yoloResults.map((result) {
+    return filteredResults.map((result) {
       return Positioned(
         left: result["box"][0] * factorX,
         top: result["box"][1] * factorY,
-          width: (result["box"][2] - result["box"][0]) * factorX,
+        width: (result["box"][2] - result["box"][0]) * factorX,
         height: (result["box"][3] - result["box"][1]) * factorY,
         child: Container(
           decoration: BoxDecoration(
@@ -271,4 +328,3 @@ class PolygonPainter extends CustomPainter {
     return false;
   }
 }
-
