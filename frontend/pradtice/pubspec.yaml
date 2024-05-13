@@ -49,7 +49,7 @@ dependencies:
   provider: ^6.0.3
   flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
-    path: C:\asdf\capstone-2024-23\frontend\flutter_vision-master
+    path: /Users/su_wo/Desktop/capstone-2024-23/frontend/flutter_vision-master
 
   #  tmap_ui_sdk:
   #    git:
