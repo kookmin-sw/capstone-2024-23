@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_compass : ^0.8.0
   speech_to_text: ^6.3.0
   flutter_tts : ^3.6.0
   android_id : ^0.3.2
@@ -49,7 +50,7 @@ dependencies:
   provider: ^6.0.3
   flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
-    path: /Users/su_wo/Desktop/capstone-2024-23/frontend/flutter_vision-master
+    path: C:\asdf\capstone-2024-23\frontend\flutter_vision-master
 
   #  tmap_ui_sdk:
   #    git:

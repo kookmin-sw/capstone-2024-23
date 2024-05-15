@@ -286,6 +286,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_compass:
+    dependency: "direct main"
+    description:
+      name: flutter_compass
+      sha256: be642484f9f6975c1c6edff568281b001f2f1e604de27ecea18d97eebbdef22f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -326,7 +334,7 @@ packages:
   flutter_vision:
     dependency: "direct main"
     description:
-      path: "/Users/su_wo/Desktop/capstone-2024-23/frontend/flutter_vision-master"
+      path: "C:\\asdf\\capstone-2024-23\\frontend\\flutter_vision-master"
       relative: false
     source: path
     version: "1.1.4"

@@ -6,8 +6,10 @@ import 'package:pradtice/location_permission.dart'; //json 변환 패키지
 import 'dart:async';
 import 'GetAndroidID.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'STT.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 
-
+String Adress = '국민대';
 String nodeLat = '37.470629';
 String nodeLon = '127.126781';
 int IdxNode = 0;
@@ -21,7 +23,7 @@ class NaviTap extends StatefulWidget {
 class _NaviTapState extends State<NaviTap> {
   Sever sever = Sever();
   Timer? timer;
-
+  Compass compass = Compass();
   @override
   void initState() {
     super.initState();
@@ -39,7 +41,7 @@ class _NaviTapState extends State<NaviTap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('내비게이션')),
+      appBar: AppBar(title: Text('목적지 : ${Adress}')),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +52,16 @@ class _NaviTapState extends State<NaviTap> {
                 runSpacing: 50.0, // 세로 간격
                 alignment: WrapAlignment.center,
                 children: <Widget>[
-                  ElevatedButton(onPressed: () {
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SttAdress()),
+                      );
+                      print(Adress);
+                    });
+                  }, child: Text('목적지 설정'))
+                  ,ElevatedButton(onPressed: () {
                     sever.start_navi();
                     setState(() {
                     });
@@ -75,7 +86,10 @@ class _NaviTapState extends State<NaviTap> {
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => testmap()),
                     );
-                  }, child: Text('Map'))
+                  }, child: Text('Map')),
+                  ElevatedButton(onPressed: (){
+                    compass.printdire();
+                  }, child: Text('꾹'))
                 ]
             )
           ],
@@ -90,7 +104,7 @@ class Sever {
 
   double Lat = 0;
   double Lon = 0;
-  String Adress = '국민대';
+
   var description = '현재 경로';
   var distance = '0';
   var uuid = '';
@@ -103,6 +117,10 @@ class Sever {
   setid() {
     uuid = getID.id;
     print('uuid = $uuid');
+  }
+
+  setAdress(String adress){
+    Adress = adress;
   }
 
   Future<void> start_navi() async {
@@ -248,8 +266,50 @@ class _testmapState extends State<testmap> {
   }
 }
 
+class Compass {
+  String direct = '??';
+
+  Compass(){
+    initState();
+  }
+  void printdire() {
+    print(direct);
+}
+  void initState(){
+    FlutterCompass.events!.listen((CompassEvent event) {
+      direct = getDirect(event.heading);
+    });
+  }
 
 
+
+String getDirect(double? varangle){
+    if(varangle == null){
+      return '??';
+    }
+    double angle = varangle + 180;
+    if (angle >=337.5 || angle < 22.5){
+      return '남';
+    } else if (angle >= 22.5 && angle < 67.5){
+      return '남서';
+    } else if (angle >= 67.5 && angle < 112.5){
+      return '서';
+    } else if (angle >= 112.5 && angle < 157.5){
+      return '북서';
+    } else if (angle >= 157.5 && angle < 202.5){
+      return '북';
+    } else if (angle >= 202.5 && angle < 247.5){
+      return '북동';
+    } else if (angle >= 247.5 && angle < 292.5){
+      return '동';
+    } else if (angle >= 292.5 && angle < 337.5){
+      return '남동';
+    } else {
+      return '??';
+    }
+  }
+
+}
 
 
 
