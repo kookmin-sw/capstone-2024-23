@@ -16,7 +16,7 @@
         android:label="EYE-U"
         tools:replace="android:label"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/eye_u">
         <activity
             android:name=".MainActivity"
             android:exported="true"

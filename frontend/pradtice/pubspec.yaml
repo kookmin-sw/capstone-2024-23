@@ -50,7 +50,7 @@ dependencies:
   provider: ^6.0.3
   flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
-    path: C:\asdf\capstone-2024-23\frontend\flutter_vision-master
+    path: C:\Users\User\Desktop\capstone-2024-23\frontend\flutter_vision-master
 
   #  tmap_ui_sdk:
   #    git:
@@ -99,7 +99,9 @@ flutter:
     - assets/labels.txt
     - assets/yolov5n.tflite
     - assets/tessdata/
-  #    - assets/best-fp16.tflite # 이후 객체 인식 커스터마이징 사용시에 사용
+    - assets/eye_u.png
+    - assets/eye_u_mono.png
+  #    - assets/best-fp16.tflite  # 이후 객체 인식 커스터마이징 사용시에 사용
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

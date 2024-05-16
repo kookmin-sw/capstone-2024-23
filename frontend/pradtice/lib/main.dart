@@ -5,6 +5,7 @@ import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
 import 'STT.dart'; //음성인식 패키지
+import 'package:permission_handler/permission_handler.dart';
 
 // import 'Tmap.dart';
 import 'GoogleMap.dart';
@@ -48,10 +49,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    requestPermissions(); //권한 허가
     tts.setMessage('화면을 탭하세요');
     tts.speak();
-
   }
+
+  //권한 허가
+  Future<void> requestPermissions() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.camera,
+      Permission.microphone,
+    ].request();
+
+    final locationStatus = statuses[Permission.location];
+    final cameraStatus = statuses[Permission.camera];
+    final micStatus = statuses[Permission.microphone];
+
+    print('위치 권한: $locationStatus');
+    print('카메라 권한: $cameraStatus');
+    print('마이크 권한: $micStatus');
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -86,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 150.0), // 마이크 아이콘과 모드 버튼들 사이의 간격을 조정
                   child: Center(
+                    child: Image.asset('assets/eye_u_mono.png'),
                     // child: ElevatedButton(
                     //   onPressed: (){
                     //     Navigator.push(context,
