@@ -281,8 +281,6 @@ class Compass {
     });
   }
 
-
-
 String getDirect(double? varangle){
     if(varangle == null){
       return '??';
