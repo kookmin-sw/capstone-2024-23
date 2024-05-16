@@ -118,39 +118,40 @@ class _YoloVideoState extends State<YoloVideo> {
         ),
       );
     }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: CameraPreview(controller),
-        ),
-        ...displayBoxesAroundRecognizedObjects(size),
-        Positioned(
-          bottom: 75,
-          width: MediaQuery.of(context).size.width,
-          child: Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                width: 5,
-                color: Colors.white,
-                style: BorderStyle.solid,
-              ),
-            ),
-            child: IconButton(
-              onPressed: isDetecting ? stopDetection : startDetection,
-              icon: Icon(
-                isDetecting ? Icons.stop : Icons.play_arrow,
-                color: isDetecting ? Colors.red : Colors.white,
-              ),
-              iconSize: 50,
-            ),
+    return GestureDetector(
+      onTap: () {
+        // Handle single tap gesture: execute startDetection when isDetecting is false
+        if (!isDetecting) {
+          startDetection();
+        } else {
+          // Execute stopDetection when isDetecting is true
+          stopDetection();
+        }
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          AspectRatio(
+            aspectRatio: controller.value.aspectRatio,
+            child: CameraPreview(controller),
           ),
-        ),
-      ],
+          ...displayBoxesAroundRecognizedObjects(size),
+
+          //탐지 확인용 아이콘
+          // Positioned(
+          //   bottom: 75,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Center(
+          //     child: Icon(
+          //       isDetecting ? Icons.stop : Icons.play_arrow,
+          //       color: isDetecting ? Colors.red : Colors.white, // Adjust icon color
+          //       size: 80, // Adjust icon size
+          //     ),
+          //   ),
+          // ),
+
+        ],
+      ),
     );
   }
 
