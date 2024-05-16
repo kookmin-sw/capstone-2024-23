@@ -63,8 +63,6 @@ class _SttTabState extends State<SttTab> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => NaviTap()));
             } else if (_lastWords == '테스트 모드'){
               Navigator.push(context, MaterialPageRoute(builder: (context) => SttAdress()));
-            } else{
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SttAdress()));
             }
           },
           onDoubleTap: (){
@@ -263,7 +261,7 @@ class _SttAdressState extends State<SttAdress> {
             Navigator.pop(context);
             Navigator.pop(context);
             sever.start_navi();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NaviTap()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco()));
           },
           onDoubleTap: (){
             Navigator.pop(context);

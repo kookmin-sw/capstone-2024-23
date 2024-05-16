@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'TextToSpeech.dart';
 import 'package:vibration/vibration.dart';
 
+import 'sever.dart';
 enum Options { none, imagev5, imagev8, imagev8seg, frame }
 
 late List<CameraDescription> cameras;
@@ -81,7 +82,9 @@ class _YoloVideoState extends State<YoloVideo> {
   bool isLoaded = false;
   bool isDetecting = false;
   TTS tts = TTS(message: '');
+  Sever sever = Sever();
 
+  Timer? timer;
 
   @override
   void initState() {
@@ -105,6 +108,7 @@ class _YoloVideoState extends State<YoloVideo> {
   @override
   void dispose() async {
     super.dispose();
+    timer?.cancel();
     controller.dispose();
   }
 
@@ -121,12 +125,38 @@ class _YoloVideoState extends State<YoloVideo> {
     return GestureDetector(
       onTap: () {
         // Handle single tap gesture: execute startDetection when isDetecting is false
-        if (!isDetecting) {
-          startDetection();
-        } else {
-          // Execute stopDetection when isDetecting is true
-          stopDetection();
-        }
+        startDetection();
+        timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+          sever.current_location();
+        });
+
+        // if (!isDetecting) {
+        //   startDetection();
+        // } else {
+        //   // Execute stopDetection when isDetecting is true
+        //   stopDetection();
+        // }
+      },
+      onDoubleTap: (){
+        tts.setMessage(sever.description);
+        tts.speak();
+      },
+      onLongPress: (){
+        tts.setMessage('경로안내를 취소하려면 한번, 아니면 두번을 터치하세요');
+        tts.speak();
+        showDialog(context: context,
+            builder: (context)=>GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.pop(context);
+                timer?.cancel();
+                sever.cancel_navi();
+              },
+              onDoubleTap: (){
+                Navigator.pop(context);
+              },
+            )
+        );
       },
       child: Stack(
         fit: StackFit.expand,
