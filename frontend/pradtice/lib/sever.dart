@@ -23,7 +23,6 @@ class NaviTap extends StatefulWidget {
 class _NaviTapState extends State<NaviTap> {
   Sever sever = Sever();
   Timer? timer;
-  Compass compass = Compass();
   @override
   void initState() {
     super.initState();
@@ -82,14 +81,12 @@ class _NaviTapState extends State<NaviTap> {
                   Text('${sever.distance}M'),
                   Text('IdxNode : $IdxNode'),
                   Text(sever.description),
+                  Text(sever.dirmsg),
                   ElevatedButton(onPressed: () {
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => testmap()),
                     );
                   }, child: Text('Map')),
-                  ElevatedButton(onPressed: (){
-                    compass.printdire();
-                  }, child: Text('꾹'))
                 ]
             )
           ],
@@ -108,9 +105,11 @@ class Sever {
   var description = '현재 경로';
   var distance = '0';
   var uuid = '';
+  var dir = '';
+  var dirmsg = '방향메세지';
 
   GetID getID = GetID();
-
+  Compass compass = Compass();
   // 콜백 함수를 위한 정의
   Function? onLocationChanged;
 
@@ -131,6 +130,7 @@ class Sever {
 
   Future<void> current_location() async {
     await updateLocation();
+    dir = compass.direct;
     sendCurrentLocationRequest();
   }
 
@@ -167,7 +167,8 @@ class Sever {
 
   // 서버에 현재 위치 전송
   Future<void> sendCurrentLocationRequest() async {
-    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode');
+
+    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&curDir=$dir');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -180,6 +181,7 @@ class Sever {
         distance = jsonResponse['distance'];
         nodeLat = jsonResponse['lat'];
         nodeLon = jsonResponse['lon'];
+        dirmsg = jsonResponse['dir'];
       } else {
         print("서버에 전송 실패");
       }
@@ -287,21 +289,21 @@ String getDirect(double? varangle){
     }
     double angle = varangle + 180;
     if (angle >=337.5 || angle < 22.5){
-      return '남';
+      return 'S';
     } else if (angle >= 22.5 && angle < 67.5){
-      return '남서';
+      return 'SW';
     } else if (angle >= 67.5 && angle < 112.5){
-      return '서';
+      return 'W';
     } else if (angle >= 112.5 && angle < 157.5){
-      return '북서';
+      return 'NW';
     } else if (angle >= 157.5 && angle < 202.5){
-      return '북';
+      return 'N';
     } else if (angle >= 202.5 && angle < 247.5){
-      return '북동';
+      return 'NE';
     } else if (angle >= 247.5 && angle < 292.5){
-      return '동';
+      return 'E';
     } else if (angle >= 292.5 && angle < 337.5){
-      return '남동';
+      return 'SE';
     } else {
       return '??';
     }

@@ -53,7 +53,6 @@ class _SttTabState extends State<SttTab> {
     showDialog(context: context,
         builder: (context) => GestureDetector(
           onTap: (){
-            sever.setAdress(_lastWords);
             Navigator.pop(context);
             Navigator.pop(context);
             if(_lastWords=='보행 모드'){
@@ -62,8 +61,6 @@ class _SttTabState extends State<SttTab> {
             else if (_lastWords == '경로 탐색 모드') {
               Navigator.push(context, MaterialPageRoute(builder: (context) => NaviTap()));
             } else if (_lastWords == '테스트 모드'){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SttAdress()));
-            } else{
               Navigator.push(context, MaterialPageRoute(builder: (context) => SttAdress()));
             }
           },
@@ -263,7 +260,7 @@ class _SttAdressState extends State<SttAdress> {
             Navigator.pop(context);
             Navigator.pop(context);
             sever.start_navi();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NaviTap()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco()));
           },
           onDoubleTap: (){
             Navigator.pop(context);
