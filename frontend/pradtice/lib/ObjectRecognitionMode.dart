@@ -98,6 +98,7 @@ class _YoloVideoState extends State<YoloVideo> {
     controller = CameraController(cameras[0], ResolutionPreset.medium);
     await controller.initialize();
     await loadYoloModel();
+    sever.setid();
     setState(() {
       isLoaded = true;
       isDetecting = false;

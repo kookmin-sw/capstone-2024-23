@@ -53,7 +53,6 @@ class _SttTabState extends State<SttTab> {
     showDialog(context: context,
         builder: (context) => GestureDetector(
           onTap: (){
-            sever.setAdress(_lastWords);
             Navigator.pop(context);
             Navigator.pop(context);
             if(_lastWords=='보행 모드'){

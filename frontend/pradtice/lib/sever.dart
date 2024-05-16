@@ -168,7 +168,7 @@ class Sever {
   // 서버에 현재 위치 전송
   Future<void> sendCurrentLocationRequest() async {
 
-    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&curDir=$dir}');
+    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&curDir=$dir');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {
