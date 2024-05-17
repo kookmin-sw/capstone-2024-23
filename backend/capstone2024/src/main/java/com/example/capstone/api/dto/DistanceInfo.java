@@ -17,4 +17,6 @@ public class DistanceInfo {
 
     private String dir;
 
+    private int cnt;
+
 }

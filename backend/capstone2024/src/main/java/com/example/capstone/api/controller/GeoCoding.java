@@ -65,15 +65,32 @@ public class GeoCoding {
                        @RequestParam("curLon") String curLon,
                        @RequestParam("uuid") String uuid,
                        @RequestParam("pointIndex") int pointIndex,
-                                        @RequestParam("curDir") String curDir){
+                                        @RequestParam("cnt") int cnt,@RequestParam("distance") int distance){
         System.out.println("-----------------current--------------");
+        System.out.println("curLat = " + curLat);
+        System.out.println("curLon = " + curLon);
+        System.out.println("uuid = " + uuid);
+        System.out.println("pointIndex = " + pointIndex);
+        System.out.println("cnt = " + cnt);
+
+
+        return pedestrianService.currentLocationCheck(curLat, curLon, uuid, pointIndex,cnt,distance);
+    }
+
+    @GetMapping("/direction")
+    public String direction(@RequestParam("curLat") String curLat,
+                                        @RequestParam("curLon") String curLon,
+                                        @RequestParam("uuid") String uuid,
+                                        @RequestParam("pointIndex") int pointIndex,
+                                        @RequestParam("curDir") String curDir){
+        System.out.println("-----------------direction--------------");
         System.out.println("curLat = " + curLat);
         System.out.println("curLon = " + curLon);
         System.out.println("uuid = " + uuid);
         System.out.println("pointIndex = " + pointIndex);
         System.out.println("curDir = " + curDir);
 
-        return pedestrianService.currentLocationCheck(curLat, curLon, uuid, pointIndex,curDir);
+        return pedestrianService.directionCheck(curLat, curLon, uuid, pointIndex,curDir);
     }
 
 
