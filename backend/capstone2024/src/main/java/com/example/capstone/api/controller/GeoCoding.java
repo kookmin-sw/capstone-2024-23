@@ -64,9 +64,16 @@ public class GeoCoding {
     public DistanceInfo currentLocation(@RequestParam("curLat") String curLat,
                        @RequestParam("curLon") String curLon,
                        @RequestParam("uuid") String uuid,
-                       @RequestParam("pointIndex") int pointIndex){
+                       @RequestParam("pointIndex") int pointIndex,
+                                        @RequestParam("curDir") String curDir){
+        System.out.println("-----------------current--------------");
+        System.out.println("curLat = " + curLat);
+        System.out.println("curLon = " + curLon);
+        System.out.println("uuid = " + uuid);
+        System.out.println("pointIndex = " + pointIndex);
+        System.out.println("curDir = " + curDir);
 
-        return pedestrianService.currentLocationCheck(curLat, curLon, uuid, pointIndex);
+        return pedestrianService.currentLocationCheck(curLat, curLon, uuid, pointIndex,curDir);
     }
 
 

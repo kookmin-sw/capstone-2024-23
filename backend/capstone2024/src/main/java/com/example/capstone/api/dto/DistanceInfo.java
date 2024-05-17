@@ -15,4 +15,6 @@ public class DistanceInfo {
     private String lat;
     private String lon;
 
+    private String dir;
+
 }

@@ -147,11 +147,71 @@ public class PedestrianService {
     }
 
     public DistanceInfo currentLocationCheck(String curLat, String curLon,
-                                                    String uuid, int pointIndex){
+                                                    String uuid, int pointIndex, String curDir){
 
         List<Route> path = routeRepository.findByMemberUuid(uuid);
         String nextLon = path.get(pointIndex).getLon();
         String nextLat = path.get(pointIndex).getLat();
+
+        //방향 계산
+
+            double startLatDouble = Double.parseDouble(curLat);
+            double startLonDouble = Double.parseDouble(curLon);
+            double endLatDouble = Double.parseDouble(nextLat);
+            double endLonDouble = Double.parseDouble(nextLon);
+
+            double lat1 = Math.toRadians(startLatDouble);
+            double lon1 = Math.toRadians(startLonDouble);
+            double lat2 = Math.toRadians(endLatDouble);
+            double lon2 = Math.toRadians(endLonDouble);
+
+            double dLon = lon2 - lon1;
+
+            double x = Math.cos(lat2) * Math.sin(dLon);
+            double y = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+
+            double initialBearing = Math.atan2(x, y);
+
+            // Convert bearing from radians to degrees
+            initialBearing = Math.toDegrees(initialBearing);
+            initialBearing = (initialBearing + 360) % 360;
+
+            // Convert to 45 degree compass directions
+            String[] compassDirections = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
+            int index = (int) Math.round(initialBearing / 45) % 8;
+
+            String targetDir = compassDirections[index];
+
+        int currentIndex = -1;
+        int targetIndex = -1;
+        String dirMsg;
+
+        for (int i = 0; i < compassDirections.length; i++) {
+            if (compassDirections[i].equals(curDir)) {
+                currentIndex = i;
+            }
+            if (compassDirections[i].equals(targetDir)) {
+                targetIndex = i;
+            }
+        }
+        if (currentIndex == -1 || targetIndex == -1) {
+            dirMsg = "방위 계산 오류";
+        }
+
+
+        int difference = targetIndex - currentIndex;
+        if (difference < 0) {
+            difference += 8;
+        }
+
+        if (difference == 0) {
+            dirMsg = "해당 방향으로 진행하세요";
+        } else if (difference <= 4) {
+            dirMsg = "오른쪽으로 몸을 돌리세요 ";
+        } else {
+            dirMsg = "왼쪽으로 몸을 돌리세요";
+        }
+
 
         URI uri = uriBuilderService.buildUriDistanceInfo(curLon, curLat, nextLon, nextLat);
         HttpHeaders headers = new HttpHeaders();
@@ -164,12 +224,13 @@ public class PedestrianService {
 
         DistanceInfo info = new DistanceInfo();
         int dist = Integer.parseInt(body.getDistanceInfo().getDistance());
-        if (dist <= 3){
+        if (dist <= 5){
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex+1);
             info.setDescription(path.get(pointIndex).getDescription());
             info.setLat(nextLat);
             info.setLon(nextLon);
+            info.setDir(dirMsg);
             return info;
         }
         else {
@@ -178,6 +239,7 @@ public class PedestrianService {
             info.setDescription("이동중");
             info.setLat(nextLat);
             info.setLon(nextLon);
+            info.setDir(dirMsg);
             return info;
         }
 
