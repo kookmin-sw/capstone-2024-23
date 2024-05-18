@@ -171,6 +171,7 @@ public class PedestrianService {
             cnt++;
 
 
+
         if (dist <= 5){
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex+1);
@@ -179,9 +180,13 @@ public class PedestrianService {
             info.setLon(nextLon);
             if(pointIndex == path.size()-1){
                 info.setDescription("도착");
+                System.out.println("dist = " + dist);
+                System.out.println("path 최대 인덱스 = " + (path.size()-1));
             }
             else {
                 info.setDescription(path.get(pointIndex).getDescription());
+                System.out.println("dist = " + dist);
+                System.out.println("path 최대 인덱스 = " + (path.size()-1));
             }
 
             return info;
@@ -191,12 +196,17 @@ public class PedestrianService {
             info.setPointIndex(pointIndex);
             if (cnt >= 4) {
                 info.setDescription("재탐색");
-                info.setCnt(cnt);
+                info.setCnt(0);
             }
-            else info.setDescription("이동중");
+            else {
+                info.setCnt(cnt);
+                info.setDescription("이동중");
+            }
             info.setLat(nextLat);
             info.setLon(nextLon);
 
+            System.out.println("dist = " + dist);
+            System.out.println("path 최대 인덱스 = " + (path.size()-1));
             return info;
         }
 
