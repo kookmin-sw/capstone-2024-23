@@ -96,7 +96,7 @@ class _SttTabState extends State<SttTab> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('화면을 탭하여 음성인식 시작',style: TextStyle(fontSize: 20),),
+                        Text('화면을 누르면서 음성인식 시작',style: TextStyle(fontSize: 20),),
                         Container(height: 10,),
                         Text(_lastWords,style: TextStyle(fontSize: 25),),
                         Container(height: 50,),
@@ -294,7 +294,7 @@ class _SttAdressState extends State<SttAdress> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('화면을 탭하여 음성인식 시작',style: TextStyle(fontSize: 20),),
+                        Text('화면을 누르면서 음성인식 시작',style: TextStyle(fontSize: 20),),
                         Container(height: 10,),
                         Text(_lastWords,style: TextStyle(fontSize: 25),),
                         Container(height: 50,),
