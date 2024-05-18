@@ -56,7 +56,7 @@ class _SttTabState extends State<SttTab> {
             Navigator.pop(context);
             Navigator.pop(context);
             if(_lastWords=='보행 모드'){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco()),);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco(tabnum: 0)),);
             }
             else if (_lastWords == '경로 탐색 모드') {
               Navigator.push(context, MaterialPageRoute(builder: (context) => NaviTap()));
@@ -260,7 +260,7 @@ class _SttAdressState extends State<SttAdress> {
             Navigator.pop(context);
             Navigator.pop(context);
             sever.start_navi();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ObjectReco(tabnum: 1,)));
           },
           onDoubleTap: (){
             Navigator.pop(context);
