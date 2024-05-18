@@ -8,11 +8,12 @@ import 'GetAndroidID.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'STT.dart';
 import 'package:flutter_compass/flutter_compass.dart';
-
+import 'TextToSpeech.dart';
 String Adress = '국민대';
-String nodeLat = '37.470629';
-String nodeLon = '127.126781';
+String nodeLat = '';
+String nodeLon = '';
 int IdxNode = 0;
+int difNode = 0;
 class NaviTap extends StatefulWidget {
   const NaviTap({super.key});
 
@@ -23,6 +24,7 @@ class NaviTap extends StatefulWidget {
 class _NaviTapState extends State<NaviTap> {
   Sever sever = Sever();
   Timer? timer;
+
   @override
   void initState() {
     super.initState();
@@ -62,31 +64,28 @@ class _NaviTapState extends State<NaviTap> {
                   }, child: Text('목적지 설정'))
                   ,ElevatedButton(onPressed: () {
                     sever.start_navi();
-                    setState(() {
-                    });
                   }, child: Text('Start-navi')),
                   ElevatedButton(onPressed: () {
-                    timer?.cancel(); // 실행 중인 타이머가 있다면 취소
-                    // 새로운 타이머 생성 및 시작
-                    timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
-                      sever.current_location();
-                      setState(() {
-                      });
-                    });
+                    sever.current_location();
                   }, child: Text('Current-location')),
                   ElevatedButton(onPressed: () {
-                    timer?.cancel(); // 타이머 취소
+                    sever.canceltimer();// 타이머 취소
                     sever.cancel_navi();
                   }, child: Text('Cancel-navi')),
                   Text('${sever.distance}M'),
                   Text('IdxNode : $IdxNode'),
                   Text(sever.description),
                   Text(sever.dirmsg),
+                  Text('${sever.cnt}'),
                   ElevatedButton(onPressed: () {
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => testmap()),
                     );
                   }, child: Text('Map')),
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                    });
+                  }, child: Text('꾹'))
                 ]
             )
           ],
@@ -98,9 +97,12 @@ class _NaviTapState extends State<NaviTap> {
 
 class Sever {
   MyLocation myLocation = MyLocation();
+  Timer? timer;
+  Timer? timer1;
 
   double Lat = 0;
   double Lon = 0;
+  int cnt = 0;
 
   var description = '현재 경로';
   var distance = '0';
@@ -110,6 +112,7 @@ class Sever {
 
   GetID getID = GetID();
   Compass compass = Compass();
+  TTS tts = TTS(message: '');
   // 콜백 함수를 위한 정의
   Function? onLocationChanged;
 
@@ -121,21 +124,64 @@ class Sever {
   setAdress(String adress){
     Adress = adress;
   }
+  ttsread(){
+    tts.speak();
+  }
+  canceltimer(){
+    timer?.cancel();
+    timer1?.cancel();
+  }
 
   Future<void> start_navi() async {
     setid();
     await updateLocation();
     sendStartNaviRequest();
+    return direct_();
   }
 
   Future<void> current_location() async {
-    await updateLocation();
-    dir = compass.direct;
-    sendCurrentLocationRequest();
+    difNode=IdxNode;
+    if (timer1 != null && timer1!.isActive) {
+      timer1?.cancel();
+    }
+    timer1 = Timer.periodic(Duration(seconds: 3), (Timer t) async {
+      await updateLocation();
+      sendCurrentLocationRequest().then((_){
+        if(description == '재탐색'){
+          timer1?.cancel();
+          tts.setMessage('경로를 재탐색 합니다');
+          tts.speak();
+          start_navi().then((_){
+            current_location();
+          });
+        }
+        if(description == '도착'){
+          timer1?.cancel();
+          cancel_navi().then((_){
+            tts.setMessage('목적지에 도착했습니다.');
+            tts.speak();
+          });
+        }
+      });
+    });
   }
 
   Future<void> cancel_navi() async {
+    timer1?.cancel();
     sendCancelNaviRequest();
+  }
+
+  Future<void> direct_() async{
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) async {
+      await updateLocation();
+      dir = compass.direct;
+      sendDirect_().then((_){
+        if(dirmsg == '해당 방향으로 진행하세요'){
+          timer?.cancel();
+          tts.speak();
+        }
+      });
+    });
   }
 
   Future<void> updateLocation() async {
@@ -157,6 +203,8 @@ class Sever {
         print(jsonResponse);
         IdxNode = jsonResponse['pointIndex'];
         description = jsonResponse['description'];
+        tts.setMessage(description);
+        cnt=0;
       } else {
         print("서버 전송 실패");
       }
@@ -168,7 +216,7 @@ class Sever {
   // 서버에 현재 위치 전송
   Future<void> sendCurrentLocationRequest() async {
 
-    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&curDir=$dir');
+    var url = Uri.parse('http://15.164.219.111:8080/current-location?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&cnt=$cnt&distance=$distance');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -177,11 +225,21 @@ class Sever {
         var jsonResponse = jsonDecode(responseBody);
         print(jsonResponse);
         IdxNode = jsonResponse['pointIndex'];
-        description = jsonResponse['description'];
+        if(difNode != IdxNode){
+          timer1?.cancel();
+          direct_().then((_){
+            current_location();
+          });
+        }
+        if(jsonResponse['description']!= '이동중'){
+          description = jsonResponse['description'];
+          tts.setMessage(description);
+          tts.speak();
+        }
         distance = jsonResponse['distance'];
         nodeLat = jsonResponse['lat'];
         nodeLon = jsonResponse['lon'];
-        dirmsg = jsonResponse['dir'];
+        cnt = jsonResponse['cnt'];
       } else {
         print("서버에 전송 실패");
       }
@@ -198,6 +256,26 @@ class Sever {
       if (response.statusCode == 200) {
         print("전송 완료");
         print(response.body);
+      } else {
+        print("서버 전송 실패");
+      }
+    } catch (e) {
+      print("에러코드 : $e");
+    }
+  }
+
+  Future<void> sendDirect_() async {
+    var url = Uri.parse('http://15.164.219.111:8080/direction?curLat=$Lat&curLon=$Lon&uuid=$uuid&pointIndex=$IdxNode&curDir=$dir');
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        print("전송 완료");
+        var responseBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(responseBody);
+        print(jsonResponse);
+        dirmsg = jsonResponse['dirMsg'];
+        tts.setMessage(dirmsg);
+        tts.speak();
       } else {
         print("서버 전송 실패");
       }
@@ -283,32 +361,25 @@ class Compass {
     });
   }
 
-String getDirect(double? varangle){
-    if(varangle == null){
+  String getDirect(double? varangle) {
+    if (varangle == null) {
       return '??';
     }
     double angle = varangle + 180;
-    if (angle >=337.5 || angle < 22.5){
-      return 'S';
-    } else if (angle >= 22.5 && angle < 67.5){
-      return 'SW';
-    } else if (angle >= 67.5 && angle < 112.5){
+    angle = angle % 360; // Ensure the angle is within 0 to 360 degrees
+
+    if (angle >= 22.5 && angle < 112.5) {
       return 'W';
-    } else if (angle >= 112.5 && angle < 157.5){
-      return 'NW';
-    } else if (angle >= 157.5 && angle < 202.5){
+    } else if (angle >= 112.5 && angle < 202.5) {
       return 'N';
-    } else if (angle >= 202.5 && angle < 247.5){
-      return 'NE';
-    } else if (angle >= 247.5 && angle < 292.5){
+    } else if (angle >= 202.5 && angle < 292.5) {
       return 'E';
-    } else if (angle >= 292.5 && angle < 337.5){
-      return 'SE';
+    } else if ((angle >= 292.5 && angle < 360) || (angle >= 0 && angle < 22.5)) {
+      return 'S';
     } else {
       return '??';
     }
   }
-
 }
 
 

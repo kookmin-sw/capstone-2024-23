@@ -127,10 +127,7 @@ class _YoloVideoState extends State<YoloVideo> {
       onTap: () {
         // Handle single tap gesture: execute startDetection when isDetecting is false
         startDetection();
-        timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
-          sever.current_location();
-        });
-
+        sever.current_location();
         // if (!isDetecting) {
         //   startDetection();
         // } else {
@@ -139,8 +136,7 @@ class _YoloVideoState extends State<YoloVideo> {
         // }
       },
       onDoubleTap: (){
-        tts.setMessage(sever.description);
-        tts.speak();
+        sever.ttsread();
       },
       onLongPress: (){
         tts.setMessage('경로안내를 취소하려면 한번, 아니면 두번을 터치하세요');
@@ -260,12 +256,10 @@ class _YoloVideoState extends State<YoloVideo> {
         for (var obj in filteredResults) {
           double bottomY = obj['box'][1] + obj['box'][3];
           if (bottomY > 730 && targetLabels.contains(obj['tag'])) {
-            tts.setMessage('위험');
-            tts.speak();
+            // tts.setMessage('위험');
+            // tts.speak();
             Vibration.vibrate(duration: 500);
           }
-          print("전체 값 : $result");
-          print("첫 번째 물체의 바운딩 박스 하단 Y 좌표: $bottomY");
         }
 
         // 필터링된 결과를 yoloResults에 업데이트

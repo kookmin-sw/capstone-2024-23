@@ -85,12 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blueGrey,
-            title: Text("메인화면"),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(4.0), // 밑줄의 높이 설정
               child: Container(
                 color: Colors.black, // 밑줄의 색상 설정
-                height: 1.0, // 밑줄의 두께 설정
+                height: 0, // 밑줄의 두께 설정
               ),
             ),
           ),
