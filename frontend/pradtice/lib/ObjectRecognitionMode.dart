@@ -21,15 +21,15 @@ void main() async {
   DartPluginRegistrant.ensureInitialized();
   runApp(
     const MaterialApp(
-      home: ObjectReco(),
+      home: ObjectReco(tabnum: 1,),
     ),
   );
 }
 
 
 class ObjectReco extends StatefulWidget {
-  const ObjectReco({Key? key}) : super(key: key);
-
+  const ObjectReco({Key? key,required this.tabnum}) : super(key: key);
+  final int tabnum;
   @override
   State<ObjectReco> createState() => _ObjectRecoState();
 }
@@ -60,7 +60,7 @@ class _ObjectRecoState extends State<ObjectReco> {
 
   Widget task(Options option) {
     if (option == Options.frame) {
-      return YoloVideo(vision: vision);
+      return YoloVideo(vision: vision,tabnum: widget.tabnum,);
     }
     return const Center(child: Text("Choose Task"));
   }
@@ -68,8 +68,8 @@ class _ObjectRecoState extends State<ObjectReco> {
 
 class YoloVideo extends StatefulWidget {
   final FlutterVision vision;
-
-  const YoloVideo({Key? key, required this.vision}) : super(key: key);
+  final int tabnum;
+  const YoloVideo({Key? key, required this.vision, required this.tabnum}) : super(key: key);
 
   @override
   State<YoloVideo> createState() => _YoloVideoState();
@@ -123,63 +123,91 @@ class _YoloVideoState extends State<YoloVideo> {
         ),
       );
     }
-    return GestureDetector(
-      onTap: () {
-        // Handle single tap gesture: execute startDetection when isDetecting is false
-        startDetection();
-        sever.current_location();
-        // if (!isDetecting) {
-        //   startDetection();
-        // } else {
-        //   // Execute stopDetection when isDetecting is true
-        //   stopDetection();
-        // }
-      },
-      onDoubleTap: (){
-        sever.ttsread();
-      },
-      onLongPress: (){
-        tts.setMessage('경로안내를 취소하려면 한번, 아니면 두번을 터치하세요');
-        tts.speak();
-        showDialog(context: context,
-            builder: (context)=>GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-                Navigator.pop(context);
-                timer?.cancel();
-                sever.cancel_navi();
-              },
-              onDoubleTap: (){
-                Navigator.pop(context);
-              },
-            )
-        );
-      },
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          AspectRatio(
-            aspectRatio: controller.value.aspectRatio,
-            child: CameraPreview(controller),
-          ),
-          ...displayBoxesAroundRecognizedObjects(size),
+    if(widget.tabnum==1){
+      return GestureDetector(
+        onTap: () {
+          startDetection();
+          sever.current_location();
+        },
+        onDoubleTap: () {
+          sever.ttsread();
+        },
+        onLongPress: () {
+          tts.setMessage('경로안내를 취소하려면 한번, 아니면 두번을 터치하세요');
+          tts.speak();
+          showDialog(
+              context: context,
+              builder: (context) => GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      timer?.cancel();
+                      sever.cancel_navi();
+                    },
+                    onDoubleTap: () {
+                      Navigator.pop(context);
+                    },
+                  ));
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: CameraPreview(controller),
+            ),
+            ...displayBoxesAroundRecognizedObjects(size),
 
-          //탐지 확인용 아이콘
-          // Positioned(
-          //   bottom: 75,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Center(
-          //     child: Icon(
-          //       isDetecting ? Icons.stop : Icons.play_arrow,
-          //       color: isDetecting ? Colors.red : Colors.white, // Adjust icon color
-          //       size: 80, // Adjust icon size
-          //     ),
-          //   ),
-          // ),
+            //탐지 확인용 아이콘
+            // Positioned(
+            //   bottom: 75,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Center(
+            //     child: Icon(
+            //       isDetecting ? Icons.stop : Icons.play_arrow,
+            //       color: isDetecting ? Colors.red : Colors.white, // Adjust icon color
+            //       size: 80, // Adjust icon size
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      );
+    } else{
+      return GestureDetector(
+        onTap: () {
+          if (!isDetecting) {
+            startDetection();
+          } else {
+            // Execute stopDetection when isDetecting is true
+            stopDetection();
+          }
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: CameraPreview(controller),
+            ),
+            ...displayBoxesAroundRecognizedObjects(size),
 
-        ],
-      ),
-    );
+            //탐지 확인용 아이콘
+            // Positioned(
+            //   bottom: 75,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Center(
+            //     child: Icon(
+            //       isDetecting ? Icons.stop : Icons.play_arrow,
+            //       color: isDetecting ? Colors.red : Colors.white, // Adjust icon color
+            //       size: 80, // Adjust icon size
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      );
+    }
   }
 
   // YOLO 모델 로드

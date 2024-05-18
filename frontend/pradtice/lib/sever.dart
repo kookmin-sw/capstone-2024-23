@@ -136,7 +136,10 @@ class Sever {
     setid();
     await updateLocation();
     sendStartNaviRequest();
-    return direct_();
+    direct_().then((_){
+      tts.setMessage(description);
+      ttsread();
+    });
   }
 
   Future<void> current_location() async {
@@ -203,7 +206,6 @@ class Sever {
         print(jsonResponse);
         IdxNode = jsonResponse['pointIndex'];
         description = jsonResponse['description'];
-        tts.setMessage(description);
         cnt=0;
       } else {
         print("서버 전송 실패");
