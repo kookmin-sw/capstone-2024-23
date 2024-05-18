@@ -201,7 +201,7 @@ public class PedestrianService {
         }
 
     }
-    public String directionCheck(String curLat, String curLon,
+    public DirectionInfo directionCheck(String curLat, String curLon,
                                        String uuid, int pointIndex, String curDir){
 
         List<Route> path = routeRepository.findByMemberUuid(uuid);
@@ -267,7 +267,9 @@ public class PedestrianService {
         } else {
             dirMsg = "왼쪽으로 몸을 돌리세요";
         }
-        return dirMsg;
+        DirectionInfo dirInfo = new DirectionInfo();
+        dirInfo.setDirMsg(dirMsg);
+        return dirInfo;
     }
     public void cancelNavi(String uuid){
         routeRepository.deleteAllByMemberUuid(uuid);

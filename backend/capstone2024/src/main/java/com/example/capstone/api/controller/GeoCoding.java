@@ -78,7 +78,7 @@ public class GeoCoding {
     }
 
     @GetMapping("/direction")
-    public String direction(@RequestParam("curLat") String curLat,
+    public DirectionInfo direction(@RequestParam("curLat") String curLat,
                                         @RequestParam("curLon") String curLon,
                                         @RequestParam("uuid") String uuid,
                                         @RequestParam("pointIndex") int pointIndex,
