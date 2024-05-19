@@ -30,6 +30,7 @@ void main() async {
 class ObjectReco extends StatefulWidget {
   const ObjectReco({Key? key,required this.tabnum}) : super(key: key);
   final int tabnum;
+
   @override
   State<ObjectReco> createState() => _ObjectRecoState();
 }
@@ -267,7 +268,7 @@ class _YoloVideoState extends State<YoloVideo> {
           "stop sign",
           "parking meter",
           "person",
-          "chair"
+          "chair",
         ];
 
         // 필터링된 결과를 저장할 리스트
