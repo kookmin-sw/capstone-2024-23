@@ -60,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Permission.location,
       Permission.camera,
       Permission.microphone,
+
     ].request();
 
     final locationStatus = statuses[Permission.location];

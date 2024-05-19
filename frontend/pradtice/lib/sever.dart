@@ -9,11 +9,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'STT.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'TextToSpeech.dart';
-String Adress = '국민대';
+import 'ObjectRecognitionMode.dart';
+String Adress = '';
 String nodeLat = '';
 String nodeLon = '';
 int IdxNode = 0;
 int difNode = 0;
+bool checkdir = false;
 class NaviTap extends StatefulWidget {
   const NaviTap({super.key});
 
@@ -104,7 +106,7 @@ class Sever {
   double Lon = 0;
   int cnt = 0;
 
-  var description = '현재 경로';
+  var description = '방향을 지정합니다';
   var distance = '0';
   var uuid = '';
   var dir = '';
@@ -113,6 +115,7 @@ class Sever {
   GetID getID = GetID();
   Compass compass = Compass();
   TTS tts = TTS(message: '');
+  TTS tts1 = TTS(message: '');
   // 콜백 함수를 위한 정의
   Function? onLocationChanged;
 
@@ -137,8 +140,10 @@ class Sever {
     await updateLocation();
     sendStartNaviRequest();
     direct_().then((_){
-      tts.setMessage(description);
-      ttsread();
+        if(checkdir==true){
+          tts1.setMessage('화면을 탭하세요');
+          tts1.speak();
+        }
     });
   }
 
@@ -149,23 +154,7 @@ class Sever {
     }
     timer1 = Timer.periodic(Duration(seconds: 3), (Timer t) async {
       await updateLocation();
-      sendCurrentLocationRequest().then((_){
-        if(description == '재탐색'){
-          timer1?.cancel();
-          tts.setMessage('경로를 재탐색 합니다');
-          tts.speak();
-          start_navi().then((_){
-            current_location();
-          });
-        }
-        if(description == '도착'){
-          timer1?.cancel();
-          cancel_navi().then((_){
-            tts.setMessage('목적지에 도착했습니다.');
-            tts.speak();
-          });
-        }
-      });
+      sendCurrentLocationRequest();
     });
   }
 
@@ -175,13 +164,16 @@ class Sever {
   }
 
   Future<void> direct_() async{
+    checkdir=false;
     timer = Timer.periodic(Duration(seconds: 3), (Timer t) async {
+      cnt=0;
       await updateLocation();
       dir = compass.direct;
       sendDirect_().then((_){
         if(dirmsg == '해당 방향으로 진행하세요'){
           timer?.cancel();
-          tts.speak();
+          tts1.speak();
+          checkdir=true;
         }
       });
     });
@@ -227,6 +219,10 @@ class Sever {
         var jsonResponse = jsonDecode(responseBody);
         print(jsonResponse);
         IdxNode = jsonResponse['pointIndex'];
+        distance = jsonResponse['distance'];
+        nodeLat = jsonResponse['lat'];
+        nodeLon = jsonResponse['lon'];
+        cnt = jsonResponse['cnt'];
         if(difNode != IdxNode){
           timer1?.cancel();
           direct_().then((_){
@@ -235,13 +231,25 @@ class Sever {
         }
         if(jsonResponse['description']!= '이동중'){
           description = jsonResponse['description'];
+          if(description == '도착'){
+            timer1?.cancel();
+            cancel_navi().then((_){
+              tts.setMessage('목적지에 도착했습니다. 경로안내를 종료합니다');
+              tts.speak();
+            });
+          }
+          if(description == '재탐색'){
+            timer1?.cancel();
+            timer?.cancel();
+            tts.setMessage('경로를 재탐색 합니다.');
+            tts.speak();
+            cancel_navi().then((_){
+              start_navi();
+            });
+          }
           tts.setMessage(description);
           tts.speak();
         }
-        distance = jsonResponse['distance'];
-        nodeLat = jsonResponse['lat'];
-        nodeLon = jsonResponse['lon'];
-        cnt = jsonResponse['cnt'];
       } else {
         print("서버에 전송 실패");
       }
@@ -276,8 +284,8 @@ class Sever {
         var jsonResponse = jsonDecode(responseBody);
         print(jsonResponse);
         dirmsg = jsonResponse['dirMsg'];
-        tts.setMessage(dirmsg);
-        tts.speak();
+        tts1.setMessage(dirmsg);
+        tts1.speak();
       } else {
         print("서버 전송 실패");
       }
@@ -341,8 +349,7 @@ class _testmapState extends State<testmap> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _updateMarkers, // 버튼을 누를 때마다 마커 업데이트
-        label: Text('위치 업데이트'),
-        icon: Icon(Icons.location_on),
+        label: Icon(Icons.location_on),
       ),
     );
   }
