@@ -18,5 +18,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     List<Route> findByMemberUuid(final String uuid);
     List<Route> findByMember(final Member member);
     @Transactional(rollbackFor = Exception.class)
-    void deleteAllByMemberUuid(final String uuid);
+    void deleteAllByMemberUuid(String uuid);
 }

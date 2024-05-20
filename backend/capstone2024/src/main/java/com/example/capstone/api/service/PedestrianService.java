@@ -147,11 +147,14 @@ public class PedestrianService {
     }
 
     public DistanceInfo currentLocationCheck(String curLat, String curLon,
-                                                    String uuid, int pointIndex){
+                                                    String uuid, int pointIndex, int cnt, int distance){
 
         List<Route> path = routeRepository.findByMemberUuid(uuid);
         String nextLon = path.get(pointIndex).getLon();
         String nextLat = path.get(pointIndex).getLat();
+
+
+
 
         URI uri = uriBuilderService.buildUriDistanceInfo(curLon, curLat, nextLon, nextLat);
         HttpHeaders headers = new HttpHeaders();
@@ -164,21 +167,123 @@ public class PedestrianService {
 
         DistanceInfo info = new DistanceInfo();
         int dist = Integer.parseInt(body.getDistanceInfo().getDistance());
-        if (dist <= 1){
+        if (dist > distance)
+            cnt++;
+
+
+
+        if (dist <= 5){
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex+1);
-            info.setDescription(path.get(pointIndex).getDescription());
+            info.setCnt(cnt);
+            info.setLat(nextLat);
+            info.setLon(nextLon);
+            if(pointIndex == path.size()-1){
+                info.setDescription("도착");
+                System.out.println("dist = " + dist);
+                System.out.println("path 최대 인덱스 = " + (path.size()-1));
+            }
+            else {
+                info.setDescription(path.get(pointIndex).getDescription());
+                System.out.println("dist = " + dist);
+                System.out.println("path 최대 인덱스 = " + (path.size()-1));
+            }
+
             return info;
         }
         else {
             info.setDistance(String.valueOf(dist));
             info.setPointIndex(pointIndex);
+            if (cnt >= 4) {
+                info.setDescription("재탐색");
+                info.setCnt(0);
+            }
+            else {
+                info.setCnt(cnt);
+                info.setDescription("이동중");
+            }
+            info.setLat(nextLat);
+            info.setLon(nextLon);
+
+            System.out.println("dist = " + dist);
+            System.out.println("path 최대 인덱스 = " + (path.size()-1));
             return info;
         }
 
     }
+    public DirectionInfo directionCheck(String curLat, String curLon,
+                                       String uuid, int pointIndex, String curDir){
+
+        List<Route> path = routeRepository.findByMemberUuid(uuid);
+        String nextLon = path.get(pointIndex).getLon();
+        String nextLat = path.get(pointIndex).getLat();
+        //방향 계산
+
+        double startLatDouble = Double.parseDouble(curLat);
+        double startLonDouble = Double.parseDouble(curLon);
+        double endLatDouble = Double.parseDouble(nextLat);
+        double endLonDouble = Double.parseDouble(nextLon);
+
+        double lat1 = Math.toRadians(startLatDouble);
+        double lon1 = Math.toRadians(startLonDouble);
+        double lat2 = Math.toRadians(endLatDouble);
+        double lon2 = Math.toRadians(endLonDouble);
+
+        double dLon = lon2 - lon1;
+
+        double x = Math.cos(lat2) * Math.sin(dLon);
+        double y = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+
+        double initialBearing = Math.atan2(x, y);
+
+        // Convert bearing from radians to degrees
+        initialBearing = Math.toDegrees(initialBearing);
+        initialBearing = (initialBearing + 360) % 360;
+
+        // Convert to 45 degree compass directions
+        String[] compassDirections = {"N", "E", "S", "W"};
+        int index = (int) Math.round(initialBearing / 90) % 4;
+
+        String targetDir = compassDirections[index];
+
+        int currentIndex = -1;
+        int targetIndex = -1;
+        String dirMsg;
+
+        for (int i = 0; i < compassDirections.length; i++) {
+            if (compassDirections[i].equals(curDir)) {
+                currentIndex = i;
+            }
+            if (compassDirections[i].equals(targetDir)) {
+                targetIndex = i;
+            }
+        }
+        if (currentIndex == -1 || targetIndex == -1) {
+            dirMsg = "방위 계산 오류";
+        }
+
+
+        int difference = targetIndex - currentIndex;
+        if (difference < 0) {
+            difference += 4;
+        }
+
+        if (difference == 0) {
+            dirMsg = "해당 방향으로 진행하세요";
+        } else if (difference == 1) {
+            dirMsg = "오른쪽으로 몸을 돌리세요";
+        } else if (difference == 2) {
+            dirMsg = "뒤로 돌리세요";
+        } else {
+            dirMsg = "왼쪽으로 몸을 돌리세요";
+        }
+        DirectionInfo dirInfo = new DirectionInfo();
+        dirInfo.setDirMsg(dirMsg);
+        return dirInfo;
+    }
     public void cancelNavi(String uuid){
         routeRepository.deleteAllByMemberUuid(uuid);
+        System.out.println("uuid = " + uuid + "삭제 중");
     }
 
 }
