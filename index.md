@@ -2,18 +2,26 @@
 **[중간 보고서](https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link)** <br>
 **[중간발표 PPT](https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true)**<br/>
 **[팀페이지 주소](https://github.com/kookmin-sw/capstone-2024-23)** <br>
+**[최종발표 자료](https://drive.google.com/drive/folders/1e31Y14xjxMHKBm3kBdTwpcm1VmLhErAp?usp=sharing)**<br>
+
 <br/>
 
 ## 프로젝트 소개
-EYE-U는 보다 안전하고 편리한 내비게이션 솔루션을 제공하여 시각 장애인의 이동성을 향상시키는 것을 목표로 합니다.
-기존의 시각 장애인을 위한 길 안내 방법은 주로 점자판이나 안내견과 같은 수단을 사용해왔지만, 이러한 방법들은 제약이 많고 불편한 점들이 있습니다.
-이러한 문제를 극복하기 위해 시각 장애를 가진 분들을 위한 네비게이션 앱을 개발하게 되었습니다.
+**“혹시 흰 지팡이나 안내견에 의지하여 길을 걷는 시각장애인을 본 적 있나요?"**<br><br>
+기존의 시각장애인을 위한 길 안내는 주로 점자판이나 안내견과 같은 수단을 사용해왔습니다. <br>
+하지만 이러한 방법들은 여러 제약과 불편한 점이 있습니다. <br>
+이 문제를 극복하기 위해 저희 EYE-U는 시각 장애가 있는 분들을 위한 내비게이션 앱을 개발하고자 합니다. <br><br>
+본 프로젝트는 시각장애인 또는 저시력자분들을 주요 대상으로 하여, 그들이 일상 생활에서 겪는 보행의 불편함과 위험을 줄여주는 보행 보조 앱입니다.<br>
+저희 앱은 실시간 음성 길 안내, 장애물 탐지, 위험물 알림 기능을 통해 이용자가 보다 안전하고 편리한 서비스를 경험할 수 있도록 도와줍니다.  <br>
+
 <br/>
 
 ## Abstract
-EYE-U aims to enhance the mobility of visually impaired individuals by providing a safer and more convenient navigation solution. <br>
-Traditional methods of guiding visually impaired individuals, such as braille maps or guide dogs, often come with limitations and inconveniences.<br>
-To overcome these challenges, we have developed a navigation app specifically designed for individuals with visual impairments.<br>
+“Have you ever seen a visually impaired person walking down the street relying on a white cane or guide dog? ”<br>
+
+Existing route guidance for the visually impaired has mainly used means such as Braille boards or guide dogs. However, these methods have several limitations and inconveniences. To overcome this problem, we at EYE-U want to develop a navigation app for people with visual impairments.
+
+This project is a walking assistance app targeting people who are visually impaired or have low vision and reduces the discomfort and risk of walking they experience in their daily lives. Our app helps users experience a safer and more convenient service through real-time voice directions, obstacle detection, and dangerous goods notification functions.
 <br/>
 
 ## 소개 영상
