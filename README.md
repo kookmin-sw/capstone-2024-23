@@ -269,19 +269,18 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
    </a>
 </div>  
 
-<details>
-<summary> <h4>사용자 매뉴얼<h4/> </summary>
-<div markdown="1"> 
-  
-[![사용자 매뉴얼](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/dc7d956e-2387-4b1c-b0d5-78aa490b43a4)](https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link)
-</details> 
-</div>
-<details>
-  
-<summary> <h4>포스터<h4/> </summary>
-<div markdown="1">   
-  
-![image](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/f470ff9c-ad4f-42a8-b7f3-4dd064ebf0c4)
 
-</div>
+<div align="center">
+<details>
+<summary><h4>사용자 매뉴얼</h4></summary>
+<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
+  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/dc7d956e-2387-4b1c-b0d5-78aa490b43a4" alt="사용자 매뉴얼" width="600"/>
+</a>
 </details>
+
+<details>
+<summary><h4>포스터</h4></summary>
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/97556843-d3f8-4a03-b81c-c543aa83a6ea" alt="포스터" width="600"/>
+</details>
+</div>
+
