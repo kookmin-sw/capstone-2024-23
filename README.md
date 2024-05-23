@@ -65,7 +65,7 @@ This project is a walking assistance app targeting people who are visually impai
 <br/>
 <br>
 
-## 📃 EYE-U 매뉴얼 | EYE-U Manual
+## 📃 매뉴얼 | Manual
 <a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
   <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5921c473-6732-494b-a0b0-833e70514887" alt="매뉴얼" width="400"/>
 </a>
