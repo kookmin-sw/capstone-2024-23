@@ -19,6 +19,10 @@ Existing route guidance for the visually impaired has mainly used means such as 
 This project is a walking assistance app targeting people who are visually impaired or have low vision and reduces the discomfort and risk of walking they experience in their daily lives. Our app helps users experience a safer and more convenient service through real-time voice directions, obstacle detection, and dangerous goods notification functions.
 <br/><br/><br/>
 
+## 📃 포스터 | Poster 
+<img width="637" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/39ed36ba-197c-436e-a67b-bf4bc6866031">
+
+<br/><br/>
 
 
 ## 📘 주요 기능 | Key Features
@@ -27,7 +31,6 @@ This project is a walking assistance app targeting people who are visually impai
 - 보행 모드
   - 실시간 내비게이션 길 음성 안내 + 위험물 탐지
  <br/>
-<br/>
   
 ## 💡 EYE-U POINT
 - UI/UX
@@ -61,6 +64,12 @@ This project is a walking assistance app targeting people who are visually impai
  <br>
 <br/>
 <br>
+
+## 📃 매뉴얼 | Manual
+<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
+  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5921c473-6732-494b-a0b0-833e70514887" alt="매뉴얼" width="400"/>
+</a>
+<br/><br/>
 
 ## 팀 소개
 #### 김호준
