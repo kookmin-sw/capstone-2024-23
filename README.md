@@ -280,7 +280,9 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
 
 <details>
 <summary><h4>포스터</h4></summary>
-<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/97556843-d3f8-4a03-b81c-c543aa83a6ea" alt="포스터" width="600"/>
+<a href="https://drive.google.com/file/d/1pSbIkfw7-YX9NZHFm7l9u1XaIsZ3M2fC/view?usp=drive_link">
+  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/881627ee-8d80-4f84-91bb-3cf22d175708" alt="포스터" width="600"/>
+</a>
 </details>
 </div>
 
