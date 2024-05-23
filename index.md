@@ -324,9 +324,10 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
   </a>
 <div/>
 
+<br/>
 
 <div/>
 <div align="center">
-<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link"> 📃 사용자 매뉴얼</a>
+<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link"> 📃 사용자 매뉴얼</a> | 
 <a href="https://drive.google.com/file/d/1pSbIkfw7-YX9NZHFm7l9u1XaIsZ3M2fC/view?usp=drive_link"> 📰 포스터</a>
 </div>
