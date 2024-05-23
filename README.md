@@ -80,8 +80,10 @@ This project is a walking assistance app targeting people who are visually impai
 ~~~
 - 어플리케이션 APK 
 1. Android Studio - build
+
 2. 해당 위치에 설치된 APK 파일을 배포한다.
-capstone-2024-23\frontend\practice\build\app\outputs\flutter-apk 
+capstone-2024-23\frontend\practice\build\app\outputs\flutter-apk
+
 ~~~
 
 </div>
@@ -95,11 +97,13 @@ capstone-2024-23\frontend\practice\build\app\outputs\flutter-apk
 <div markdown="1">   
    
 ~~~
-1. git clone <br>
-$ git clone https://github.com/kookmin-sw/capstone-2024-23.git<br><br>
-2. Android Studio - build<br><br>
-3. 해당 위치에 설치된 APK 파일 실행한다.<br>
-capstone-2024-23\frontend\practice\build\app\outputs\flutter-apk <br>
+1. git clone
+$ git clone https://github.com/kookmin-sw/capstone-2024-23.git
+
+2. Android Studio - build
+
+3. 해당 위치에 설치된 APK 파일 실행한다.
+capstone-2024-23\frontend\practice\build\app\outputs\flutter-apk
 ~~~
 
 </div>
@@ -243,9 +247,14 @@ java -Dspring.config.location=classpath:/application.properties -jar yourapp.jar
 2. 플러터 3.19 버전 Download
 3. git clone 
 $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
-4. pubspec.yaml 파일 -> seppech_to_text : Pub.get Download
-5. Android Studio - build
-<br>
+4.  frontend/pradtice/pubspec.yaml -> flutter_vision-master 경로 설정 (본인 경로)
+
+~~~
+   path: /Users/yoon/StudioProjects/capstone-2024-23/frontend/flutter_vision-master
+~~~
+
+5. pubspec.yaml -> Pub.get Download
+
 
 </div>
 </details>
