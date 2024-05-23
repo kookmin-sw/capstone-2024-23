@@ -1,6 +1,6 @@
 ### [EYE-U](https://kookmin-sw.github.io/capstone-2024-23/) 객체탐지를 활용한 시각장애인용 보행 보조 앱 <br><br>
 
-<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/8c53c3f8-c5b8-49c1-a952-05e15c483894" alt="Video as GIF" width="25%"/>
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/8c53c3f8-c5b8-49c1-a952-05e15c483894" alt="Video as GIF" width="38%"/>
 
 
 ## 📌 프로젝트 개요 | Project Abstract
