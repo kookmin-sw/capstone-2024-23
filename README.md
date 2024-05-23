@@ -18,6 +18,11 @@ This project is a walking assistance app targeting people who are visually impai
 <br/><br/><br/>
 
 
+## 📃 포스터 | Poster 
+<img width="600" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/6d3f005f-be75-420e-adb8-2a1f75d032ab">
+
+<br/><br/>
+
 
 ## 📘 주요 기능 | Key Features
 - 탐지 모드
@@ -25,7 +30,6 @@ This project is a walking assistance app targeting people who are visually impai
 - 보행 모드
   - 실시간 내비게이션 길 음성 안내 + 위험물 탐지
  <br/>
-<br/>
   
 ## 💡 EYE-U POINT
 - UI/UX
@@ -41,9 +45,8 @@ This project is a walking assistance app targeting people who are visually impai
 - 위험 물체 감지
    - 실시간 위험물 감지 및 진동 경고
 <br>
-
-
 <br/>
+
 
 ## 📁 서비스 프로세스 | Sevice Process 
 <img width="700" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/1040888e-5833-4ccf-858c-129147d04752">
@@ -54,12 +57,19 @@ This project is a walking assistance app targeting people who are visually impai
 ## 🎞 소개 영상 | Introduction video
 [![소개영상](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/fbbb76cf-4f32-4450-8ba2-bba2e690552a)](https://www.youtube.com/watch?v=sgO9tWCrPbo)
  <br>
-<br>
+<br><br/>
+
 ## 🎞 시연 영상 | Demonstration video
 [![시연영상](https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/23c35d4a-64ef-480c-b2cc-998f91cf2b7a)](https://www.youtube.com/watch?v=FsVF8S9SSMI)
  <br>
 <br/>
 <br>
+
+## 📃 EYE-U 매뉴얼 | EYE-U Manual
+<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
+  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5921c473-6732-494b-a0b0-833e70514887" alt="매뉴얼" width="400"/>
+</a>
+<br/><br/>
 
 ## 🧑🏻‍💻 팀 소개 | Introduction of team members
 |                                                              **김호준**                                                              |                                                          **박성원**                                                          |                                                           **윤미나**                                                           |                                                                **이태영**                                                                |                                                                **정회창**                                                                |
