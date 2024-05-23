@@ -270,16 +270,8 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
 </div>  
 
 <div align="center">
-  <a href="https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link">
-    중간 보고서
-  </a>
-  | 
-  <a href="https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true">
-    중간발표 PPT
-  </a>
-  |
-  <a href="https://github.com/kookmin-sw/capstone-2024-23">
-    팀페이지 주소
+  <a href="https://drive.google.com/drive/folders/1vbsn7_iQJLKg0mndYibDV0XZ2FvSA50m?usp=sharing">
+    중간발표 자료
   </a>
   | 
   <a href="https://drive.google.com/drive/folders/1e31Y14xjxMHKBm3kBdTwpcm1VmLhErAp?usp=sharing">
@@ -287,19 +279,8 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
   </a>
 <div/>
 
+<div/>
 <div align="center">
-<details>
-<summary><h4>사용자 매뉴얼</h4></summary>
-<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
-  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/dc7d956e-2387-4b1c-b0d5-78aa490b43a4" alt="사용자 매뉴얼" width="600"/>
-</a>
-</details>
-
-<details>
-<summary><h4>포스터</h4></summary>
-<a href="https://drive.google.com/file/d/1pSbIkfw7-YX9NZHFm7l9u1XaIsZ3M2fC/view?usp=drive_link">
-  <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/881627ee-8d80-4f84-91bb-3cf22d175708" alt="포스터" width="600"/>
-</a>
-</details>
+<a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link"> 사용자 매뉴얼</a> | 
+<a href="https://drive.google.com/file/d/1pSbIkfw7-YX9NZHFm7l9u1XaIsZ3M2fC/view?usp=drive_link"> 포스터</a>
 </div>
-
