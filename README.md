@@ -1,6 +1,6 @@
 ### [EYE-U](https://kookmin-sw.github.io/capstone-2024-23/) 객체탐지를 활용한 시각장애인용 보행 보조 앱 <br><br>
 
-<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/8c53c3f8-c5b8-49c1-a952-05e15c483894" alt="Video as GIF" width="38%"/>
+<img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/8c53c3f8-c5b8-49c1-a952-05e15c483894" alt="Video as GIF" width="38%"/><br/>
 
 
 ## 📌 프로젝트 개요 | Project Abstract
@@ -20,12 +20,12 @@ Existing route guidance for the visually impaired has mainly used means such as 
 This project is a walking assistance app targeting people who are visually impaired or have low vision and reduces the discomfort and risk of walking they experience in their daily lives. Our app helps users experience a safer and more convenient service through real-time voice directions, obstacle detection, and dangerous goods notification functions.
 <br/><br/><br/>
 
-
+<!--
 ## 📃 포스터 | Poster 
 <img width="637" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/39ed36ba-197c-436e-a67b-bf4bc6866031">
 
 <br/><br/>
-
+-->
 
 ## 📘 주요 기능 | Key Features
 - 탐지 모드
@@ -68,11 +68,13 @@ This project is a walking assistance app targeting people who are visually impai
 <br/>
 <br>
 
+<!--
 ## 📃 매뉴얼 | Manual
 <a href="https://drive.google.com/file/d/1CKPsragzixRz9LznDcxsWLsOERELbrju/view?usp=drive_link">
   <img src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/5921c473-6732-494b-a0b0-833e70514887" alt="매뉴얼" width="400"/>
 </a>
 <br/><br/>
+-->
 
 ## 🧑🏻‍💻 팀 소개 | Introduction of team members
 |                                                              **김호준**                                                              |                                                          **박성원**                                                          |                                                           **윤미나**                                                           |                                                                **이태영**                                                                |                                                                **정회창**                                                                |
