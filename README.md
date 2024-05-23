@@ -269,6 +269,23 @@ $ git clone https://github.com/kookmin-sw/capstone-2024-23.git
    </a>
 </div>  
 
+<div align="center">
+  <a href="https://drive.google.com/file/d/1qCj5WcPVCpLKO3xc9QuAqeMOCx_elHUC/view?usp=drive_link">
+    중간 보고서
+  </a>
+  | 
+  <a href="https://docs.google.com/presentation/d/1-DtbgnbBgO2ALt-VH1T_9J1p4hcaCV0F/edit?usp=drive_link&ouid=116710458189142292821&rtpof=true&sd=true">
+    중간발표 PPT
+  </a>
+  |
+  <a href="https://github.com/kookmin-sw/capstone-2024-23">
+    팀페이지 주소
+  </a>
+  | 
+  <a href="https://drive.google.com/drive/folders/1e31Y14xjxMHKBm3kBdTwpcm1VmLhErAp?usp=sharing">
+    최종발표 자료
+  </a>
+<div/>
 
 <div align="center">
 <details>
