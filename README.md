@@ -19,7 +19,7 @@ This project is a walking assistance app targeting people who are visually impai
 
 
 ## 📃 포스터 | Poster 
-<img width="600" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/6d3f005f-be75-420e-adb8-2a1f75d032ab">
+<img width="637" alt="image" src="https://github.com/kookmin-sw/capstone-2024-23/assets/143046108/39ed36ba-197c-436e-a67b-bf4bc6866031">
 
 <br/><br/>
 
