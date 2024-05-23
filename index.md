@@ -30,7 +30,7 @@ This project is a walking assistance app targeting people who are visually impai
   - 장애물 및 위험물 탐지 잋 진동 경고
 - 보행 모드
   - 실시간 내비게이션 길 음성 안내 + 위험물 탐지
- <br/>
+ <br/> <br/>
   
 ## 💡 EYE-U POINT
 - UI/UX
