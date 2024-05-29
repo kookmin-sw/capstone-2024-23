@@ -63,11 +63,10 @@ android {
         enabled = true
     }
 
-    aaptOptions {
+aaptOptions {
         noCompress 'tflite'
         noCompress 'lite'
     }
-
 }
 
 flutter {
