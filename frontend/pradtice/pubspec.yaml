@@ -48,7 +48,7 @@ dependencies:
   geolocator: ^8.1.1
   google_maps_flutter: ^2.5.3
   provider: ^6.0.3
-  
+  flutter_vision:
     # 로드 되어있는 flutter_vision-master 경로로 설정!
     path: C:\Users\User\Desktop\capstone-2024-23\frontend\flutter_vision-master
 
@@ -56,7 +56,6 @@ dependencies:
   #    git:
   #      url: https://github.com/TmapSDK/TmapUI_FlutterSDK.git
   #      ref: 1.0.26 # version. git tag name
-
 
   http: ^0.13.4
   test: ^1.24.9

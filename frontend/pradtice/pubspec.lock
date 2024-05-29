@@ -1012,15 +1012,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
-  tmap_ui_sdk:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "1.0.26"
-      resolved-ref: eda927f4e4380be79b153d37698c5daf9cbcb974
-      url: "https://github.com/TmapSDK/TmapUI_FlutterSDK.git"
-    source: git
-    version: "1.0.26"
   tuple:
     dependency: transitive
     description:
