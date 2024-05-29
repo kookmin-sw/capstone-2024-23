@@ -11,7 +11,7 @@ import 'dart:async'; //탭 시간차 패키지
 import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
 import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
 
-// import 'Tmap.dart';
+import 'Tmap.dart';
 import 'GoogleMap.dart';
 import 'TextToSpeech.dart';
 import 'GetAndroidID.dart';
