@@ -62,7 +62,10 @@ android {
     dataBinding {
         enabled = true
     }
-
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
 }
 
 flutter {
